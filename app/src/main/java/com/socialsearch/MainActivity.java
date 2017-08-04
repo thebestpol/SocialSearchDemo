@@ -1,6 +1,5 @@
 package com.socialsearch;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import com.socialsearch.application.di.DemoApplicationComponent;
@@ -20,8 +19,7 @@ public class MainActivity extends AppCompatActivity {
     initializeInjector();
 
     demoUserStory.initialize(this);
-
-    getFragmentManager().beginTransaction().add(R.id.container, new Fragment()).commit();
+    demoUserStory.start();
   }
 
   private void initializeInjector() {
