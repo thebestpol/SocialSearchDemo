@@ -13,7 +13,6 @@ import org.robolectric.RobolectricTestRunner;
 
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.verify;
 import static org.robolectric.Shadows.shadowOf;
 
 /**
@@ -43,9 +42,4 @@ import static org.robolectric.Shadows.shadowOf;
     assertThat(fragmentManager.findFragmentById(R.id.container), notNullValue());
   }
 
-  @Test public void initialize_user_story() {
-    MainActivity mainActivity = Robolectric.setupActivity(MainActivity.class);
-
-    verify(mockUserStory).initialize();
-  }
 }

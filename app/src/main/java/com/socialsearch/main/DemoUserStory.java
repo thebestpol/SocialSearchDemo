@@ -1,5 +1,8 @@
 package com.socialsearch.main;
 
+import android.support.v4.app.FragmentManager;
+import com.socialsearch.MainActivity;
+
 /**
  * SocialSearchDemo
  * com.socialsearch.main
@@ -8,11 +11,13 @@ package com.socialsearch.main;
 
 public class DemoUserStory {
 
+  private FragmentManager supportFragmentManager;
+
   public DemoUserStory() {
 
   }
 
-  public void initialize() {
-
+  public void initialize(MainActivity mainActivity) {
+    supportFragmentManager = mainActivity.getSupportFragmentManager();
   }
 }
