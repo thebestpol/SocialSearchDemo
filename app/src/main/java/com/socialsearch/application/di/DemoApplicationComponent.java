@@ -1,6 +1,8 @@
 package com.socialsearch.application.di;
 
 import com.socialsearch.application.DemoApplication;
+import com.socialsearch.main.di.MainComponent;
+import com.socialsearch.main.di.MainModule;
 import dagger.Component;
 import javax.inject.Singleton;
 
@@ -14,4 +16,6 @@ import javax.inject.Singleton;
 public interface DemoApplicationComponent {
 
   void inject(DemoApplication application);
+
+  MainComponent createMainComponent(MainModule module);
 }
