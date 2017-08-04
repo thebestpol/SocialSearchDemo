@@ -1,5 +1,6 @@
 package com.socialsearch;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import com.socialsearch.main.DemoUserStory;
@@ -14,6 +15,7 @@ import org.robolectric.RobolectricTestRunner;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.robolectric.Shadows.shadowOf;
 
@@ -54,5 +56,11 @@ import static org.robolectric.Shadows.shadowOf;
     Robolectric.setupActivity(MainActivity.class);
 
     verify(mockUserStory).start();
+  }
+
+  @Test public void handle_activity_recreation() {
+    Robolectric.buildActivity(MainActivity.class).create(new Bundle()).visible().get();
+
+    verify(mockUserStory, never()).start();
   }
 }
