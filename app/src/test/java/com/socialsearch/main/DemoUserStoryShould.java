@@ -1,5 +1,6 @@
 package com.socialsearch.main;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -46,5 +47,14 @@ public class DemoUserStoryShould {
     verify(mockFragmentManager).beginTransaction();
     verify(mockFragmentTransaction).add(eq(R.id.container), any(Fragment.class));
     verify(mockFragmentTransaction).commit();
+  }
+
+  @Test public void restore_user_story_state() {
+    Bundle mockBundle = mock(Bundle.class);
+    DemoUserStory demoUserStory = new DemoUserStory();
+
+    demoUserStory.restoreState(mockBundle);
+
+    verify(mockBundle).getParcelable("KEY_STATE");
   }
 }

@@ -15,6 +15,7 @@ import org.robolectric.RobolectricTestRunner;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.robolectric.Shadows.shadowOf;
@@ -59,8 +60,19 @@ import static org.robolectric.Shadows.shadowOf;
   }
 
   @Test public void handle_activity_recreation() {
-    Robolectric.buildActivity(MainActivity.class).create(new Bundle()).visible().get();
+    Bundle fakeBundle = new Bundle();
+    Robolectric.buildActivity(MainActivity.class).create(fakeBundle).visible().get();
 
     verify(mockUserStory, never()).start();
+    verify(mockUserStory).restoreState(eq(fakeBundle));
+  }
+
+  @Test public void delegate_save_instance_state_to_user_story() {
+    MainActivity mainActivity = Robolectric.setupActivity(MainActivity.class);
+
+    mainActivity.recreate();
+
+    verify(mockUserStory).saveState(any(Bundle.class));
+    verify(mockUserStory).restoreState(any(Bundle.class));
   }
 }

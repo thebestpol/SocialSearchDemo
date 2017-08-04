@@ -22,7 +22,15 @@ public class MainActivity extends AppCompatActivity {
 
     if (savedInstanceState == null) {
       demoUserStory.start();
+    } else {
+      demoUserStory.restoreState(savedInstanceState);
     }
+  }
+
+  @Override protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+
+    demoUserStory.saveState(outState);
   }
 
   private void initializeInjector() {

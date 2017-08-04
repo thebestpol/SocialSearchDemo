@@ -1,5 +1,6 @@
 package com.socialsearch.main;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import com.socialsearch.MainActivity;
@@ -25,5 +26,13 @@ public class DemoUserStory {
 
   public void start() {
     supportFragmentManager.beginTransaction().add(R.id.container, new Fragment()).commit();
+  }
+
+  public void restoreState(Bundle savedState) {
+    savedState.getParcelable("KEY_STATE");
+  }
+
+  public void saveState(Bundle outState) {
+    outState.putParcelable("KEY_STATE", null);
   }
 }
