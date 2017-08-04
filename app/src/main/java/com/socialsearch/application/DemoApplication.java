@@ -1,6 +1,10 @@
 package com.socialsearch.application;
 
 import android.app.Application;
+import com.socialsearch.application.di.DaggerDemoApplicationComponent;
+import com.socialsearch.application.di.DemoApplicationComponent;
+import com.socialsearch.application.di.DemoApplicationModule;
+import com.socialsearch.core.di.HasComponent;
 
 /**
  * SocialSearchDemo
@@ -8,7 +12,9 @@ import android.app.Application;
  * DemoApplication
  */
 
-public class DemoApplication extends Application {
+public class DemoApplication extends Application implements HasComponent<DemoApplicationComponent> {
+
+  private DemoApplicationComponent applicationComponent;
 
   @Override public void onCreate() {
     super.onCreate();
@@ -17,6 +23,13 @@ public class DemoApplication extends Application {
   }
 
   private void initializeInjector() {
+    applicationComponent = DaggerDemoApplicationComponent.builder()
+        .demoApplicationModule(new DemoApplicationModule(this))
+        .build();
+    applicationComponent.inject(this);
+  }
 
+  @Override public DemoApplicationComponent getComponent() {
+    return applicationComponent;
   }
 }
