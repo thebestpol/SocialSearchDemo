@@ -19,7 +19,10 @@ public class MainActivity extends AppCompatActivity {
     initializeInjector();
 
     demoUserStory.initialize(this);
-    demoUserStory.start();
+
+    if (savedInstanceState == null) {
+      demoUserStory.start();
+    }
   }
 
   private void initializeInjector() {
