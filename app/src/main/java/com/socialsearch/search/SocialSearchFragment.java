@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.socialsearch.R;
 import com.socialsearch.core.presenter.Presenter;
 import com.socialsearch.core.view.fragment.RootFragment;
+import com.socialsearch.core.view.manager.LayoutManagerProvider;
 import com.socialsearch.entity.SocialData;
 import com.socialsearch.search.di.SearchModule;
 import com.socialsearch.search.presenter.SearchPresenter;
@@ -28,7 +29,7 @@ public class SocialSearchFragment extends RootFragment implements SocialSearchVi
 
   @Inject SearchPresenter presenter;
   @Inject SocialDataAdapter socialDataAdapter;
-  @Inject RecyclerView.LayoutManager layoutManager;
+  @Inject LayoutManagerProvider layoutManagerProvider;
 
   private RecyclerView recyclerView;
   private View progressView;
@@ -41,7 +42,7 @@ public class SocialSearchFragment extends RootFragment implements SocialSearchVi
 
   @Override protected void initializeView(View view) {
     recyclerView = ((RecyclerView) view.findViewById(R.id.recyclerView));
-    recyclerView.setLayoutManager(layoutManager);
+    recyclerView.setLayoutManager(layoutManagerProvider.getLayoutManager());
     recyclerView.setAdapter(socialDataAdapter);
 
     progressView = view.findViewById(R.id.progress);
