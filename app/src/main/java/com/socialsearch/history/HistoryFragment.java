@@ -1,8 +1,10 @@
 package com.socialsearch.history;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.TextView;
 import com.socialsearch.R;
 import com.socialsearch.core.presenter.Presenter;
 import com.socialsearch.core.view.fragment.RootFragment;
@@ -10,6 +12,7 @@ import com.socialsearch.entity.HistoryData;
 import com.socialsearch.history.di.HistoryModule;
 import com.socialsearch.history.presenter.HistoryPresenter;
 import com.socialsearch.history.view.HistoryView;
+import com.socialsearch.history.view.adapter.HistoryDataAdapter;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -22,6 +25,9 @@ import javax.inject.Inject;
 public class HistoryFragment extends RootFragment implements HistoryView {
 
   @Inject HistoryPresenter presenter;
+  @Inject HistoryDataAdapter adapter;
+  private RecyclerView recyclerView;
+  private TextView feedbackTextView;
 
   public static HistoryFragment newInstance() {
     return new HistoryFragment();
@@ -36,7 +42,8 @@ public class HistoryFragment extends RootFragment implements HistoryView {
   }
 
   @Override protected void initializeView(View view) {
-
+    recyclerView = ((RecyclerView) view.findViewById(R.id.recyclerView));
+    feedbackTextView = ((TextView) view.findViewById(R.id.feedbackTextView));
   }
 
   @Override protected void initializePresenter() {
@@ -60,10 +67,15 @@ public class HistoryFragment extends RootFragment implements HistoryView {
   }
 
   @Override public void loadHistoryData(List<HistoryData> historyData) {
+    recyclerView.setVisibility(View.VISIBLE);
+    feedbackTextView.setVisibility(View.GONE);
 
+    adapter.setItems(historyData);
   }
 
   @Override public void showFeedbackMessage(String feedbackMessage) {
-
+    recyclerView.setVisibility(View.GONE);
+    feedbackTextView.setVisibility(View.VISIBLE);
+    feedbackTextView.setText(feedbackMessage);
   }
 }
