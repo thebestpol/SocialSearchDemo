@@ -20,10 +20,10 @@ public class DemoUserStory {
   private int containerId;
 
   public DemoUserStory() {
-    storyState = createStoryState();
+    storyState = initializeStoryState();
   }
 
-  @VisibleForTesting public DemoStoryState createStoryState() {
+  @VisibleForTesting public DemoStoryState initializeStoryState() {
     return new DemoStoryState();
   }
 
@@ -43,7 +43,7 @@ public class DemoUserStory {
   }
 
   public void saveState(Bundle outState) {
-    outState.putParcelable("KEY_STATE", null);
+    outState.putParcelable("KEY_STATE", storyState);
   }
 
   public DemoStoryState getStoryState() {

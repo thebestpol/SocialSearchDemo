@@ -71,7 +71,7 @@ public class DemoUserStoryShould {
     doNothing().when(spyBundle).putParcelable(Mockito.anyString(), Mockito.any());
     DemoStoryState spyStoryState = spy(new DemoStoryState());
     DemoUserStory spyDemoUserStory = new DemoUserStory() {
-      @Override public DemoStoryState createStoryState() {
+      @Override public DemoStoryState initializeStoryState() {
         return spyStoryState;
       }
     };

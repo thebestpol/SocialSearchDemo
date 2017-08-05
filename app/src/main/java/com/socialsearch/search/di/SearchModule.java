@@ -1,6 +1,7 @@
 package com.socialsearch.search.di;
 
 import com.socialsearch.core.di.PerFragment;
+import com.socialsearch.main.DemoUserStory;
 import com.socialsearch.search.presenter.SearchPresenter;
 import dagger.Module;
 import dagger.Provides;
@@ -12,7 +13,7 @@ import dagger.Provides;
  */
 @Module public class SearchModule {
 
-  @Provides @PerFragment public SearchPresenter providePresenter() {
-    return new SearchPresenter();
+  @Provides @PerFragment public SearchPresenter providePresenter(DemoUserStory demoUserStory) {
+    return new SearchPresenter(demoUserStory);
   }
 }
