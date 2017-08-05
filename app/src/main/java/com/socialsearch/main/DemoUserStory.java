@@ -5,7 +5,7 @@ import android.support.annotation.VisibleForTesting;
 import android.support.v4.app.FragmentManager;
 import com.socialsearch.core.story.StoryContainer;
 import com.socialsearch.main.state.DemoStoryState;
-import com.socialsearch.search.SearchFragment;
+import com.socialsearch.search.SocialSearchFragment;
 
 /**
  * SocialSearchDemo
@@ -35,7 +35,7 @@ public class DemoUserStory {
 
   public void start() {
     supportFragmentManager.beginTransaction()
-        .add(containerId, SearchFragment.newInstance())
+        .add(containerId, SocialSearchFragment.newInstance())
         .commit();
   }
 

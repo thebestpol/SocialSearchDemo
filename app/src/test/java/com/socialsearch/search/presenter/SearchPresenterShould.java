@@ -5,7 +5,7 @@ import com.socialsearch.entity.SocialData;
 import com.socialsearch.main.DemoUserStory;
 import com.socialsearch.main.state.DemoStoryState;
 import com.socialsearch.search.model.SearchModel;
-import com.socialsearch.search.view.SearchView;
+import com.socialsearch.search.view.SocialSearchView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
  */
 public class SearchPresenterShould {
 
-  @Mock SearchView mockView;
+  @Mock SocialSearchView mockView;
   @Mock DemoUserStory mockDemoUserStory;
   @Mock DemoStoryState mockStoryState;
   @Mock SearchModel mockSearchModel;

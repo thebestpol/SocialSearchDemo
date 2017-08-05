@@ -1,7 +1,7 @@
 package com.socialsearch.search.di;
 
 import com.socialsearch.core.di.PerFragment;
-import com.socialsearch.search.SearchFragment;
+import com.socialsearch.search.SocialSearchFragment;
 import dagger.Subcomponent;
 
 /**
@@ -11,5 +11,5 @@ import dagger.Subcomponent;
  */
 @PerFragment @Subcomponent(modules = SearchModule.class) public interface SearchComponent {
 
-  void inject(SearchFragment fragment);
+  void inject(SocialSearchFragment fragment);
 }

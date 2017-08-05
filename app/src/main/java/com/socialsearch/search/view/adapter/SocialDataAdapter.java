@@ -1,5 +1,6 @@
 package com.socialsearch.search.view.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +20,8 @@ import java.util.List;
 
 public class SocialDataAdapter extends RecyclerView.Adapter<SocialDataAdapter.ViewHolder> {
 
-  private final List<SocialData> items;
   private final ImageLoader imageLoader;
+  private List<SocialData> items;
 
   public SocialDataAdapter(ImageLoader imageLoader) {
     items = new ArrayList<>();
@@ -29,9 +30,13 @@ public class SocialDataAdapter extends RecyclerView.Adapter<SocialDataAdapter.Vi
     setHasStableIds(true);
   }
 
+  @Override public int getItemViewType(int position) {
+    return R.layout.item_social_data;
+  }
+
   @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    View view =
-        LayoutInflater.from(parent.getContext()).inflate(R.layout.item_social_data, parent, false);
+    Context context = parent.getContext();
+    View view = LayoutInflater.from(context).inflate(viewType, parent, false);
     return new ViewHolder(view);
   }
 
@@ -46,6 +51,11 @@ public class SocialDataAdapter extends RecyclerView.Adapter<SocialDataAdapter.Vi
 
   @Override public int getItemCount() {
     return items.size();
+  }
+
+  public void setItems(List<SocialData> socialData) {
+    items = socialData;
+    notifyDataSetChanged();
   }
 
   public static class ViewHolder extends RecyclerView.ViewHolder {

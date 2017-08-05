@@ -30,9 +30,9 @@ import static org.robolectric.Shadows.shadowOf;
 /**
  * SocialSearchDemo
  * com.socialsearch.search
- * SearchFragmentShould
+ * SocialSearchFragmentShould
  */
-@RunWith(RobolectricTestRunner.class) public class SearchFragmentShould {
+@RunWith(RobolectricTestRunner.class) public class SocialSearchFragmentShould {
 
   @Rule public RobolectricMockComponentRule rule = new RobolectricMockComponentRule();
 
@@ -65,7 +65,7 @@ import static org.robolectric.Shadows.shadowOf;
     // Disabling user story behaviour to enable fragment isolated test
     doNothing().when(mockUsetStory).start();
 
-    SearchFragment fragment = new SearchFragment();
+    SocialSearchFragment fragment = new SocialSearchFragment();
     SupportFragmentTestUtil.startVisibleFragment(fragment, MainActivity.class, R.id.container);
 
     verify(presenter).setView(eq(fragment));
@@ -76,7 +76,7 @@ import static org.robolectric.Shadows.shadowOf;
     // Disabling user story behaviour to enable fragment isolated test
     doNothing().when(mockUsetStory).start();
 
-    SearchFragment fragment = new SearchFragment();
+    SocialSearchFragment fragment = new SocialSearchFragment();
     SupportFragmentTestUtil.startVisibleFragment(fragment, MainActivity.class, R.id.container);
 
     fragment.onStop();
@@ -85,21 +85,21 @@ import static org.robolectric.Shadows.shadowOf;
   }
 
   @Test public void start_fragment_view() {
-    SearchFragment fragment = new SearchFragment();
+    SocialSearchFragment fragment = new SocialSearchFragment();
     SupportFragmentTestUtil.startVisibleFragment(fragment, MainActivity.class, R.id.container);
 
     assertThat(fragment.getView(), notNullValue());
   }
 
   @Test public void contain_recycler_view() {
-    SearchFragment fragment = new SearchFragment();
+    SocialSearchFragment fragment = new SocialSearchFragment();
     SupportFragmentTestUtil.startVisibleFragment(fragment, MainActivity.class, R.id.container);
 
     assertThat(fragment.getView().findViewById(R.id.recyclerView), notNullValue());
   }
 
   @Test public void contain_feedback_view() {
-    SearchFragment fragment = new SearchFragment();
+    SocialSearchFragment fragment = new SocialSearchFragment();
     SupportFragmentTestUtil.startVisibleFragment(fragment, MainActivity.class, R.id.container);
 
     View feedbackTextView = fragment.getView().findViewById(R.id.feedbackTextView);
@@ -108,7 +108,7 @@ import static org.robolectric.Shadows.shadowOf;
   }
 
   @Test public void contain_progress_view() {
-    SearchFragment fragment = new SearchFragment();
+    SocialSearchFragment fragment = new SocialSearchFragment();
     SupportFragmentTestUtil.startVisibleFragment(fragment, MainActivity.class, R.id.container);
 
     View progressView = fragment.getView().findViewById(R.id.progress);
@@ -117,7 +117,7 @@ import static org.robolectric.Shadows.shadowOf;
   }
 
   @Test public void show_feedback_on_method_call_and_modify_view_visibility() {
-    SearchFragment fragment = new SearchFragment();
+    SocialSearchFragment fragment = new SocialSearchFragment();
     SupportFragmentTestUtil.startVisibleFragment(fragment, MainActivity.class, R.id.container);
 
     fragment.showFeedbackMessage("Fake feedback message");
@@ -133,7 +133,7 @@ import static org.robolectric.Shadows.shadowOf;
   }
 
   @Test public void show_progress_view_message_and_modify_view_visibility() {
-    SearchFragment fragment = new SearchFragment();
+    SocialSearchFragment fragment = new SocialSearchFragment();
     SupportFragmentTestUtil.startVisibleFragment(fragment, MainActivity.class, R.id.container);
 
     fragment.showProgress("Fake progress message");
@@ -150,4 +150,30 @@ import static org.robolectric.Shadows.shadowOf;
     assertThat(fragment.getView().findViewById(R.id.recyclerView).getVisibility(),
         is(equalTo(View.GONE)));
   }
+
+  @Test public void show_recycler_view_with_social_data() {
+    SocialSearchFragment fragment = new SocialSearchFragment();
+    SupportFragmentTestUtil.startVisibleFragment(fragment, MainActivity.class, R.id.container);
+
+
+  }
+
+  /*
+    @Test public void call_presenter_on_offer_clicked() throws Exception {
+    Offer fakeOffer = new Offer.Builder().summary("Offer Summary")
+        .title("Offer Title")
+        .description("Offer description")
+        .build();
+    RecyclerView recyclerView = (RecyclerView) fragment.getView().findViewById(R.id.recyclerView);
+    List<Offer> fakeOffers = Arrays.asList(fakeOffer);
+    fragment.loadOffers(fakeOffers);
+
+    // Robolectric workarround to force redraw
+    recyclerView.measure(0, 0);
+    recyclerView.layout(0, 0, 100, 10000);
+
+    recyclerView.findViewHolderForAdapterPosition(0).itemView.performClick();
+    verify(mockPresenter).onOfferSelected(0);
+  }
+   */
 }

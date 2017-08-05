@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -16,7 +18,7 @@ import com.socialsearch.entity.SocialData;
 import com.socialsearch.main.di.MainComponent;
 import com.socialsearch.search.di.SearchModule;
 import com.socialsearch.search.presenter.SearchPresenter;
-import com.socialsearch.search.view.SearchView;
+import com.socialsearch.search.view.SocialSearchView;
 import com.socialsearch.search.view.adapter.SocialDataAdapter;
 import java.util.List;
 import javax.inject.Inject;
@@ -24,10 +26,10 @@ import javax.inject.Inject;
 /**
  * SocialSearchDemo
  * com.socialsearch.search
- * SearchFragment
+ * SocialSearchFragment
  */
 
-public class SearchFragment extends Fragment implements SearchView {
+public class SocialSearchFragment extends Fragment implements SocialSearchView {
 
   @Inject SearchPresenter presenter;
   @Inject SocialDataAdapter socialDataAdapter;
@@ -38,8 +40,8 @@ public class SearchFragment extends Fragment implements SearchView {
   private TextView feedbackTextView;
   private TextView progressTextView;
 
-  public static SearchFragment newInstance() {
-    return new SearchFragment();
+  public static SocialSearchFragment newInstance() {
+    return new SocialSearchFragment();
   }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,17 +101,18 @@ public class SearchFragment extends Fragment implements SearchView {
   @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     inflater.inflate(R.menu.search_menu, menu);
 
-    //MenuItem item = menu.findItem(R.id.search);
-    //((SearchView) item.getActionView()).setOnQueryTextListener(
-    //    new SearchView.OnQueryTextListener() {
-    //      @Override public boolean onQueryTextSubmit(String query) {
-    //        return false;
-    //      }
-    //
-    //      @Override public boolean onQueryTextChange(String newText) {
-    //        return false;
-    //      }
-    //    });
+    MenuItem item = menu.findItem(R.id.search);
+    ((SearchView) item.getActionView()).setOnQueryTextListener(
+        new SearchView.OnQueryTextListener() {
+          @Override public boolean onQueryTextSubmit(String query) {
+            presenter.onQuerySubmited(query);
+            return false;
+          }
+
+          @Override public boolean onQueryTextChange(String newText) {
+            return false;
+          }
+        });
   }
 
   @Override public void showFeedbackMessage(String feedbackMessage) {
@@ -126,7 +129,7 @@ public class SearchFragment extends Fragment implements SearchView {
     recyclerView.setVisibility(View.GONE);
   }
 
-  @Override public void loadSocialData(List<SocialData> response) {
-
+  @Override public void loadSocialData(List<SocialData> socialData) {
+    socialDataAdapter.setItems(socialData);
   }
 }

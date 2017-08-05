@@ -6,10 +6,10 @@ import java.util.List;
 /**
  * SocialSearchDemo
  * com.socialsearch.search.view
- * SearchView
+ * SocialSearchView
  */
 
-public interface SearchView {
+public interface SocialSearchView {
 
   void showFeedbackMessage(String feedbackMessage);
 

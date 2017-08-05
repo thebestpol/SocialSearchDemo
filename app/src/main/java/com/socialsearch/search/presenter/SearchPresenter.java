@@ -5,7 +5,7 @@ import com.socialsearch.entity.SocialData;
 import com.socialsearch.main.DemoUserStory;
 import com.socialsearch.main.state.DemoStoryState;
 import com.socialsearch.search.model.SearchModel;
-import com.socialsearch.search.view.SearchView;
+import com.socialsearch.search.view.SocialSearchView;
 import java.util.List;
 
 /**
@@ -19,14 +19,14 @@ public class SearchPresenter {
   private final SearchModel searchModel;
   private final DemoUserStory demoUserStory;
   private DemoStoryState storyState;
-  private SearchView view;
+  private SocialSearchView view;
 
   public SearchPresenter(DemoUserStory demoUserStory, SearchModel searchModel) {
     this.demoUserStory = demoUserStory;
     this.searchModel = searchModel;
   }
 
-  public void setView(SearchView view) {
+  public void setView(SocialSearchView view) {
     this.view = view;
   }
 
@@ -58,5 +58,9 @@ public class SearchPresenter {
 
   public void stop() {
 
+  }
+
+  public void onQuerySubmited(String query) {
+    
   }
 }
