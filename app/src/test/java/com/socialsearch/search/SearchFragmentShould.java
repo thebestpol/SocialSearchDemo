@@ -131,4 +131,23 @@ import static org.robolectric.Shadows.shadowOf;
     assertThat(fragment.getView().findViewById(R.id.recyclerView).getVisibility(),
         is(equalTo(View.GONE)));
   }
+
+  @Test public void show_progress_view_message_and_mofify_view_visibility() {
+    SearchFragment fragment = new SearchFragment();
+    SupportFragmentTestUtil.startVisibleFragment(fragment, MainActivity.class, R.id.container);
+
+    fragment.showProgress("Fake progress message");
+
+    View progressView = fragment.getView().findViewById(R.id.progress);
+    TextView progressTextView = (TextView) progressView.findViewById(R.id.progressTextView);
+
+    assertThat(progressView.getVisibility(), is(equalTo(View.VISIBLE)));
+    assertThat(progressTextView.getVisibility(), is(equalTo(View.VISIBLE)));
+    assertThat(progressTextView.getText().toString(), is(equalTo("Fake feedback message")));
+    // Updates view visibility
+    assertThat(fragment.getView().findViewById(R.id.feedbackTextView).getVisibility(),
+        is(equalTo(View.GONE)));
+    assertThat(fragment.getView().findViewById(R.id.recyclerView).getVisibility(),
+        is(equalTo(View.GONE)));
+  }
 }
