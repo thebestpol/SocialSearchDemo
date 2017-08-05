@@ -66,8 +66,6 @@ import static org.robolectric.Shadows.shadowOf;
 
   @Test public void bind_lifecycle_start_to_presenter() {
     // Disabling user story behaviour to enable fragment isolated test
-    doNothing().when(mockUserStory).start();
-
     verify(mockPresenter).setView(eq(historyFragment));
     verify(mockPresenter).start();
   }
