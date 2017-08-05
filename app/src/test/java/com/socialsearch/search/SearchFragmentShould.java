@@ -18,9 +18,9 @@ import static org.robolectric.Shadows.shadowOf;
 /**
  * SocialSearchDemo
  * com.socialsearch.search
- * SearchFragmentTestShould
+ * SearchFragmentShould
  */
-@RunWith(RobolectricTestRunner.class) public class SearchFragmentTestShould {
+@RunWith(RobolectricTestRunner.class) public class SearchFragmentShould {
 
   @Test public void contain_two_menu_item() {
     MainActivity mainActivity = Robolectric.setupActivity(MainActivity.class);
