@@ -63,7 +63,7 @@ public class DemoUserStoryShould {
 
     demoUserStory.restoreState(mockBundle);
 
-    verify(mockBundle).getParcelable("KEY_STATE");
+    verify(mockBundle).getParcelable(DemoUserStory.KEY_STATE);
   }
 
   @Test public void should_store_story_state_in_activity_outstate() {
@@ -78,6 +78,6 @@ public class DemoUserStoryShould {
 
     spyDemoUserStory.saveState(spyBundle);
 
-    verify(spyBundle).putParcelable(eq("KEY_STATE"), eq(spyStoryState));
+    verify(spyBundle).putParcelable(eq(DemoUserStory.KEY_STATE), eq(spyStoryState));
   }
 }

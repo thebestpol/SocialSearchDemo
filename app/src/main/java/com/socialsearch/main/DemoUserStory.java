@@ -15,6 +15,7 @@ import com.socialsearch.search.SearchFragment;
 
 public class DemoUserStory {
 
+  @VisibleForTesting public static final String KEY_STATE = "KEY_STATE";
   private DemoStoryState storyState;
   private FragmentManager supportFragmentManager;
   private int containerId;
@@ -43,7 +44,7 @@ public class DemoUserStory {
   }
 
   public void saveState(Bundle outState) {
-    outState.putParcelable("KEY_STATE", storyState);
+    outState.putParcelable(KEY_STATE, storyState);
   }
 
   public DemoStoryState getStoryState() {
