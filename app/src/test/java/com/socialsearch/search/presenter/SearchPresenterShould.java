@@ -112,4 +112,11 @@ public class SearchPresenterShould {
 
     verify(mockView).loadSocialData(Mockito.anyList());
   }
+
+  @Test public void delegate_query_to_model_on_trigger() {
+    searchPresenter.onQuerySubmitted("Fake query submitted");
+
+    verify(mockView).showProgress("Searching Fake query submitted in social media...");
+    verify(mockSearchModel).obtainSocialData(eq("Fake query submitted"), any(Callback.class));
+  }
 }

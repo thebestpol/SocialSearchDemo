@@ -105,7 +105,7 @@ public class SocialSearchFragment extends Fragment implements SocialSearchView {
     ((SearchView) item.getActionView()).setOnQueryTextListener(
         new SearchView.OnQueryTextListener() {
           @Override public boolean onQueryTextSubmit(String query) {
-            presenter.onQuerySubmited(query);
+            presenter.onQuerySubmitted(query);
             return false;
           }
 

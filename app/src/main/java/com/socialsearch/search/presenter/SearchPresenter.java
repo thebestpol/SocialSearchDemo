@@ -60,7 +60,7 @@ public class SearchPresenter {
 
   }
 
-  public void onQuerySubmited(String query) {
+  public void onQuerySubmitted(String query) {
     
   }
 }
