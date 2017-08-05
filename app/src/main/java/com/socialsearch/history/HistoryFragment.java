@@ -62,6 +62,8 @@ public class HistoryFragment extends RootFragment implements HistoryView {
     recyclerView = ((RecyclerView) view.findViewById(R.id.recyclerView));
     recyclerView.setLayoutManager(layoutManager);
     recyclerView.setAdapter(adapter);
+
+    adapter.setSelectionListener(presenter::onQuerySubmitted);
     feedbackTextView = ((TextView) view.findViewById(R.id.feedbackTextView));
   }
 

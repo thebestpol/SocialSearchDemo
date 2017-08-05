@@ -20,6 +20,7 @@ import java.util.List;
 public class HistoryDataAdapter extends RecyclerView.Adapter<HistoryDataAdapter.ViewHolder> {
 
   private final List<HistoryData> items;
+  private QuerySelectionListener listener;
 
   public HistoryDataAdapter() {
     items = new ArrayList<>();
@@ -43,11 +44,18 @@ public class HistoryDataAdapter extends RecyclerView.Adapter<HistoryDataAdapter.
 
   @Override public void onBindViewHolder(ViewHolder holder, int position) {
     HistoryData historyData = items.get(position);
-    holder.textView.setText(historyData.getQuery());
+    String query = historyData.getQuery();
+    holder.textView.setText(query);
+    holder.itemView.setTag(query);
+    holder.itemView.setOnClickListener(v -> listener.onQuerySelected(((String) v.getTag())));
   }
 
   @Override public int getItemCount() {
     return items.size();
+  }
+
+  public void setSelectionListener(QuerySelectionListener listener) {
+    this.listener = listener;
   }
 
   public static class ViewHolder extends RecyclerView.ViewHolder {
