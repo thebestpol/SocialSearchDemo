@@ -1,9 +1,11 @@
-package com.socialsearch;
+package com.socialsearch.main;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
+import com.socialsearch.R;
 import com.socialsearch.main.DemoUserStory;
+import com.socialsearch.main.MainActivity;
 import com.socialsearch.rules.RobolectricMockComponentRule;
 import org.junit.Rule;
 import org.junit.Test;

@@ -1,6 +1,6 @@
 package com.socialsearch.main.di;
 
-import com.socialsearch.MainActivity;
+import com.socialsearch.main.MainActivity;
 import com.socialsearch.core.di.PerActivity;
 import dagger.Subcomponent;
 

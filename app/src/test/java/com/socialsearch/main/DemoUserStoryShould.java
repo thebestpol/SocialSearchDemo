@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import com.socialsearch.MainActivity;
 import com.socialsearch.R;
 import org.junit.Test;
 
