@@ -17,7 +17,7 @@ import java.util.List;
 
 @Module public class HistoryModule {
 
-  @Provides @PerFragment HistoryModel provideHistoryModel() {
+  @Provides @PerFragment public HistoryModel provideHistoryModel() {
     return new HistoryModel() {
       @Override public void obtainHistoryData(Callback<List<HistoryData>> callback) {
 
@@ -25,7 +25,7 @@ import java.util.List;
     };
   }
 
-  @Provides @PerFragment HistoryPresenter provideHistoryPresenter(HistoryModel model) {
+  @Provides @PerFragment public HistoryPresenter provideHistoryPresenter(HistoryModel model) {
     return new HistoryPresenter(model);
   }
 }

@@ -4,7 +4,10 @@ import android.view.View;
 import com.socialsearch.R;
 import com.socialsearch.core.presenter.Presenter;
 import com.socialsearch.core.view.fragment.RootFragment;
+import com.socialsearch.entity.HistoryData;
 import com.socialsearch.history.di.HistoryModule;
+import com.socialsearch.history.view.HistoryView;
+import java.util.List;
 
 /**
  * SocialSearchDemo
@@ -12,7 +15,7 @@ import com.socialsearch.history.di.HistoryModule;
  * HistoryFragment
  */
 
-public class HistoryFragment extends RootFragment {
+public class HistoryFragment extends RootFragment implements HistoryView {
 
   public static HistoryFragment newInstance() {
     return new HistoryFragment();
@@ -44,5 +47,13 @@ public class HistoryFragment extends RootFragment {
 
   @Override protected int getLayoutResource() {
     return R.layout.fragment_history;
+  }
+
+  @Override public void loadHistoryData(List<HistoryData> historyData) {
+    
+  }
+
+  @Override public void showFeedbackMessage(String feedbackMessage) {
+
   }
 }
