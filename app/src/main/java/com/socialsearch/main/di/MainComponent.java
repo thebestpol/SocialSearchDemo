@@ -1,7 +1,9 @@
 package com.socialsearch.main.di;
 
-import com.socialsearch.main.MainActivity;
 import com.socialsearch.core.di.PerActivity;
+import com.socialsearch.history.di.HistoryComponent;
+import com.socialsearch.history.di.HistoryModule;
+import com.socialsearch.main.MainActivity;
 import com.socialsearch.search.di.SearchComponent;
 import com.socialsearch.search.di.SearchModule;
 import dagger.Subcomponent;
@@ -15,4 +17,6 @@ import dagger.Subcomponent;
   void inject(MainActivity activity);
 
   SearchComponent createSearchComponent(SearchModule module);
+
+  HistoryComponent createHistoryComponent(HistoryModule module);
 }

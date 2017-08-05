@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.socialsearch.core.di.HasComponent;
+import com.socialsearch.core.presenter.Presenter;
 import com.socialsearch.main.di.MainComponent;
 
 /**
@@ -40,6 +41,20 @@ public abstract class RootFragment extends Fragment {
     initializeView(view);
     initializePresenter();
   }
+
+  @Override public void onResume() {
+    super.onResume();
+
+    getPresenter().start();
+  }
+
+  @Override public void onStop() {
+    super.onStop();
+
+    getPresenter().stop();
+  }
+
+  protected abstract Presenter getPresenter();
 
   protected abstract void initializeView(View view);
 

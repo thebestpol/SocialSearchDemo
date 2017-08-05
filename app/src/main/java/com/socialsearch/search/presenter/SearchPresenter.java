@@ -1,6 +1,7 @@
 package com.socialsearch.search.presenter;
 
 import com.socialsearch.core.model.Callback;
+import com.socialsearch.core.presenter.Presenter;
 import com.socialsearch.entity.SocialData;
 import com.socialsearch.main.DemoUserStory;
 import com.socialsearch.main.state.DemoStoryState;
@@ -14,23 +15,18 @@ import java.util.List;
  * SearchPresenter
  */
 
-public class SearchPresenter {
+public class SearchPresenter extends Presenter<SocialSearchView> {
 
   private final SearchModel searchModel;
   private final DemoUserStory demoUserStory;
   private DemoStoryState storyState;
-  private SocialSearchView view;
 
   public SearchPresenter(DemoUserStory demoUserStory, SearchModel searchModel) {
     this.demoUserStory = demoUserStory;
     this.searchModel = searchModel;
   }
 
-  public void setView(SocialSearchView view) {
-    this.view = view;
-  }
-
-  public void start() {
+  @Override public void start() {
     storyState = demoUserStory.getStoryState();
     String query = storyState.getQuery();
     String errorMessage = storyState.getErrorMessage();
@@ -72,7 +68,7 @@ public class SearchPresenter {
     view.showFeedbackMessage(errorMessage);
   }
 
-  public void stop() {
+  @Override public void stop() {
     demoUserStory.updateState(storyState);
   }
 

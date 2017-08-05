@@ -8,10 +8,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import com.socialsearch.R;
-import com.socialsearch.core.di.HasComponent;
+import com.socialsearch.core.presenter.Presenter;
 import com.socialsearch.core.view.fragment.RootFragment;
 import com.socialsearch.entity.SocialData;
-import com.socialsearch.main.di.MainComponent;
 import com.socialsearch.search.di.SearchModule;
 import com.socialsearch.search.presenter.SearchPresenter;
 import com.socialsearch.search.view.SocialSearchView;
@@ -57,16 +56,8 @@ public class SocialSearchFragment extends RootFragment implements SocialSearchVi
     return super.onOptionsItemSelected(item);
   }
 
-  @Override public void onResume() {
-    super.onResume();
-
-    presenter.start();
-  }
-
-  @Override public void onStop() {
-    super.onStop();
-
-    presenter.stop();
+  @Override protected Presenter getPresenter() {
+    return presenter;
   }
 
   @Override protected void initializePresenter() {
@@ -74,9 +65,7 @@ public class SocialSearchFragment extends RootFragment implements SocialSearchVi
   }
 
   @Override protected void initializeInjector() {
-    ((HasComponent<MainComponent>) getActivity()).getComponent()
-        .createSearchComponent(new SearchModule())
-        .inject(this);
+    getMainComponent().createSearchComponent(new SearchModule()).inject(this);
   }
 
   @Override protected int getTitleResource() {

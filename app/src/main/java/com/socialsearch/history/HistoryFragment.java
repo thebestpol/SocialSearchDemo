@@ -1,7 +1,10 @@
 package com.socialsearch.history;
 
 import android.view.View;
+import com.socialsearch.R;
+import com.socialsearch.core.presenter.Presenter;
 import com.socialsearch.core.view.fragment.RootFragment;
+import com.socialsearch.history.di.HistoryModule;
 
 /**
  * SocialSearchDemo
@@ -15,6 +18,10 @@ public class HistoryFragment extends RootFragment {
     return new HistoryFragment();
   }
 
+  @Override protected Presenter getPresenter() {
+    return null;
+  }
+
   @Override protected void initializeView(View view) {
 
   }
@@ -24,18 +31,18 @@ public class HistoryFragment extends RootFragment {
   }
 
   @Override protected void initializeInjector() {
-    
+    getMainComponent().createHistoryComponent(new HistoryModule()).inject(this);
   }
 
   @Override protected int getTitleResource() {
-    return 0;
+    return R.string.history_label;
   }
 
   @Override protected boolean enableOptionsMenu() {
-    return false;
+    return true;
   }
 
   @Override protected int getLayoutResource() {
-    return 0;
+    return R.layout.fragment_history;
   }
 }
