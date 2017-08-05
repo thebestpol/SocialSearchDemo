@@ -39,21 +39,25 @@ public class SearchPresenter {
     } else if (query == null || query.isEmpty()) {
       view.showFeedbackMessage("Click on Search menu item to make a social search.");
     } else {
-      view.showProgress("Searching " + query + " in social media...");
-      searchModel.obtainSocialData(query, new Callback<List<SocialData>>() {
-        @Override public void onSuccess(List<SocialData> response) {
-          if (response.isEmpty()) {
-            view.showFeedbackMessage("Any results found.");
-          } else {
-            view.loadSocialData(response);
-          }
-        }
-
-        @Override public void onError(String errorMessage) {
-          view.showFeedbackMessage(errorMessage);
-        }
-      });
+      searchQueary(query);
     }
+  }
+
+  private void searchQueary(String query) {
+    view.showProgress("Searching " + query + " in social media...");
+    searchModel.obtainSocialData(query, new Callback<List<SocialData>>() {
+      @Override public void onSuccess(List<SocialData> response) {
+        if (response.isEmpty()) {
+          view.showFeedbackMessage("Any results found.");
+        } else {
+          view.loadSocialData(response);
+        }
+      }
+
+      @Override public void onError(String errorMessage) {
+        view.showFeedbackMessage(errorMessage);
+      }
+    });
   }
 
   public void stop() {
@@ -61,6 +65,6 @@ public class SearchPresenter {
   }
 
   public void onQuerySubmitted(String query) {
-    
+    searchQueary(query);
   }
 }
