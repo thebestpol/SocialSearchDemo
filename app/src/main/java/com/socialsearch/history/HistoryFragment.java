@@ -1,8 +1,10 @@
 package com.socialsearch.history;
 
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import com.socialsearch.R;
@@ -37,6 +39,19 @@ public class HistoryFragment extends RootFragment implements HistoryView {
 
   @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     inflater.inflate(R.menu.history_menu, menu);
+
+    MenuItem item = menu.findItem(R.id.search);
+    ((SearchView) item.getActionView()).setOnQueryTextListener(
+        new SearchView.OnQueryTextListener() {
+          @Override public boolean onQueryTextSubmit(String query) {
+            presenter.onQuerySubmitted(query);
+            return false;
+          }
+
+          @Override public boolean onQueryTextChange(String newText) {
+            return false;
+          }
+        });
   }
 
   @Override protected Presenter getPresenter() {

@@ -105,4 +105,18 @@ public class DemoUserStoryShould {
     verify(mockFragmentTransaction).addToBackStack("HistoryFragment");
     verify(mockFragmentTransaction).commit();
   }
+
+  @Test public void pop_backstack_on_navigates_to_search() {
+    FragmentManager mockFragmentManager = mock(FragmentManager.class);
+
+    MainActivity mockMainActivity = mock(MainActivity.class);
+    when(mockMainActivity.getSupportManager()).thenReturn(mockFragmentManager);
+
+    DemoUserStory demoUserStory = new DemoUserStory();
+    demoUserStory.initialize(mockMainActivity);
+
+    demoUserStory.navigateToSearch();
+
+    verify(mockFragmentManager).popBackStack();
+  }
 }

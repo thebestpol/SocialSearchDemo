@@ -29,12 +29,12 @@ public class SearchPresenter extends Presenter<SocialSearchView> {
   @Override public void start() {
     storyState = demoUserStory.getStoryState();
     String query = storyState.getQuery();
-    String errorMessage = storyState.getErrorMessage();
+    String feedBackMessage = storyState.getFeedBackMessage();
     List<SocialData> stateSocialData = storyState.getSocialData();
     if (stateSocialData != null && !stateSocialData.isEmpty()) {
       view.loadSocialData(stateSocialData);
-    } else if (errorMessage != null) {
-      view.showFeedbackMessage(errorMessage);
+    } else if (feedBackMessage != null) {
+      view.showFeedbackMessage(feedBackMessage);
     } else if (query == null || query.isEmpty()) {
       view.showFeedbackMessage("Click on Search menu item to make a social search.");
     } else {
@@ -51,6 +51,7 @@ public class SearchPresenter extends Presenter<SocialSearchView> {
           onFeedbackEvent("Any results found.");
         } else {
           storyState.setQueryResponse(response);
+          storyState.clearFeedbackMessage();
           view.loadSocialData(response);
         }
       }
@@ -63,7 +64,7 @@ public class SearchPresenter extends Presenter<SocialSearchView> {
 
   private void onFeedbackEvent(String errorMessage) {
     storyState.setFeedbackMessage(errorMessage);
-    storyState.clearSocialData();
+    storyState.clearQueryResponse();
     storyState.clearQuery();
     view.showFeedbackMessage(errorMessage);
   }

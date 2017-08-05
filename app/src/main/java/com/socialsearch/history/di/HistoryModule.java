@@ -9,6 +9,7 @@ import com.socialsearch.entity.HistoryData;
 import com.socialsearch.history.model.HistoryModel;
 import com.socialsearch.history.presenter.HistoryPresenter;
 import com.socialsearch.history.view.adapter.HistoryDataAdapter;
+import com.socialsearch.main.DemoUserStory;
 import dagger.Module;
 import dagger.Provides;
 import java.util.ArrayList;
@@ -35,8 +36,9 @@ import java.util.List;
     };
   }
 
-  @Provides @PerFragment public HistoryPresenter provideHistoryPresenter(HistoryModel model) {
-    return new HistoryPresenter(model);
+  @Provides @PerFragment
+  public HistoryPresenter provideHistoryPresenter(HistoryModel model, DemoUserStory demoUserStory) {
+    return new HistoryPresenter(model, demoUserStory);
   }
 
   @Provides @PerFragment public HistoryDataAdapter provideHistoryDataAdapter() {

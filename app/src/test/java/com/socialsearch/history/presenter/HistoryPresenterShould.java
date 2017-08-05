@@ -4,6 +4,8 @@ import com.socialsearch.core.model.Callback;
 import com.socialsearch.entity.HistoryData;
 import com.socialsearch.history.model.HistoryModel;
 import com.socialsearch.history.view.HistoryView;
+import com.socialsearch.main.DemoUserStory;
+import com.socialsearch.main.state.DemoStoryState;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,10 +16,12 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * SocialSearchDemo
@@ -28,12 +32,15 @@ public class HistoryPresenterShould {
 
   @Mock HistoryModel mockHistoryModel;
   @Mock HistoryView mockView;
+  @Mock DemoUserStory mockUserStory;
+  @Mock DemoStoryState mockState;
 
   private HistoryPresenter historyPresenter;
 
   @Before public void setUp() {
     MockitoAnnotations.initMocks(this);
-    historyPresenter = new HistoryPresenter(mockHistoryModel);
+    when(mockUserStory.getStoryState()).thenReturn(mockState);
+    historyPresenter = new HistoryPresenter(mockHistoryModel, mockUserStory);
     historyPresenter.setView(mockView);
   }
 
@@ -77,5 +84,15 @@ public class HistoryPresenterShould {
 
     verify(mockView, never()).loadHistoryData(Mockito.anyListOf(HistoryData.class));
     verify(mockView).showFeedbackMessage("Fake error feedback");
+  }
+
+  @Test public void update_story_state_and_trigger_navigation() {
+    historyPresenter.onQuerySubmitted("Fake query");
+
+    verify(mockState).setQuery(eq("Fake query"));
+    verify(mockState).clearFeedbackMessage();
+    verify(mockState).clearQueryResponse();
+
+    verify(mockUserStory).navigateToSearch();
   }
 }

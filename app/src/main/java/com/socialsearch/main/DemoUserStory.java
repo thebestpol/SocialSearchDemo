@@ -64,4 +64,8 @@ public class DemoUserStory {
         .addToBackStack(fragment.getClass().getSimpleName())
         .commit();
   }
+
+  public void navigateToSearch() {
+    supportFragmentManager.popBackStack();
+  }
 }
