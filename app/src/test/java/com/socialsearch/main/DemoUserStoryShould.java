@@ -5,12 +5,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import com.socialsearch.R;
+import com.socialsearch.main.state.DemoStoryState;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -60,5 +64,20 @@ public class DemoUserStoryShould {
     demoUserStory.restoreState(mockBundle);
 
     verify(mockBundle).getParcelable("KEY_STATE");
+  }
+
+  @Test public void should_store_story_state_in_activity_outstate() {
+    Bundle spyBundle = spy(new Bundle());
+    doNothing().when(spyBundle).putParcelable(Mockito.anyString(), Mockito.any());
+    DemoStoryState spyStoryState = spy(new DemoStoryState());
+    DemoUserStory spyDemoUserStory = new DemoUserStory() {
+      @Override public DemoStoryState createStoryState() {
+        return spyStoryState;
+      }
+    };
+
+    spyDemoUserStory.saveState(spyBundle);
+
+    verify(spyBundle).putParcelable(eq("KEY_STATE"), eq(spyStoryState));
   }
 }
