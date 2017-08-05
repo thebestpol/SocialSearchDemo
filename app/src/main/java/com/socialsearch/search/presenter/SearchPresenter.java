@@ -32,6 +32,8 @@ public class SearchPresenter {
       view.showFeedbackMessage(errorMessage);
     } else if (query == null || query.isEmpty()) {
       view.showFeedbackMessage("Click on Search menu item to make a social search.");
+    } else {
+      view.showProgress("Searching " + query + " in social media...");
     }
   }
 

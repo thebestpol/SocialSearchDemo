@@ -54,4 +54,12 @@ public class SearchPresenterShould {
 
     verify(mockView).showFeedbackMessage("Fake error message");
   }
+
+  @Test public void show_progress_if_state_has_query_and_make_the_query() {
+    when(mockStoryState.getQuery()).thenReturn("Fake query");
+
+    searchPresenter.start();
+
+    verify(mockView).showProgress("Searching Fake query in social media...");
+  }
 }
