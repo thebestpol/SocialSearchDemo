@@ -1,9 +1,9 @@
 package com.socialsearch.main;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import com.socialsearch.core.story.StoryContainer;
+import com.socialsearch.search.SearchFragment;
 
 /**
  * SocialSearchDemo
@@ -26,7 +26,7 @@ public class DemoUserStory {
   }
 
   public void start() {
-    supportFragmentManager.beginTransaction().add(containerId, new Fragment()).commit();
+    supportFragmentManager.beginTransaction().add(containerId, SearchFragment.newInstance()).commit();
   }
 
   public void restoreState(Bundle savedState) {
