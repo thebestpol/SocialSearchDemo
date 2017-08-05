@@ -3,8 +3,10 @@ package com.socialsearch.search;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import com.socialsearch.R;
 
 /**
@@ -28,5 +30,17 @@ public class SearchFragment extends Fragment {
 
   @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     inflater.inflate(R.menu.search_menu, menu);
+
+    MenuItem item = menu.findItem(R.id.search);
+    ((SearchView) item.getActionView()).setOnQueryTextListener(
+        new SearchView.OnQueryTextListener() {
+          @Override public boolean onQueryTextSubmit(String query) {
+            return false;
+          }
+
+          @Override public boolean onQueryTextChange(String newText) {
+            return false;
+          }
+        });
   }
 }
