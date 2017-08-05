@@ -3,9 +3,11 @@ package com.socialsearch.search.presenter;
 import com.socialsearch.main.DemoUserStory;
 import com.socialsearch.main.state.DemoStoryState;
 import com.socialsearch.search.view.SearchView;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -16,24 +18,29 @@ import static org.mockito.Mockito.when;
  */
 public class SearchPresenterShould {
 
-  @Test public void obtain_story_state_on_start() {
-    DemoUserStory mockDemoUserStory = mock(DemoUserStory.class);
-    SearchPresenter searchPresenter = new SearchPresenter(mockDemoUserStory);
+  @Mock SearchView mockView;
+  @Mock DemoUserStory mockDemoUserStory;
+  @Mock DemoStoryState mockStoryState;
 
+  private SearchPresenter searchPresenter;
+
+  @Before public void setUp() {
+    MockitoAnnotations.initMocks(this);
+
+    when(mockDemoUserStory.getStoryState()).thenReturn(mockStoryState);
+
+    searchPresenter = new SearchPresenter(mockDemoUserStory);
+    searchPresenter.setView(mockView);
+  }
+
+  @Test public void obtain_story_state_on_start() {
     searchPresenter.start();
 
     verify(mockDemoUserStory).getStoryState();
   }
 
   @Test public void show_hint_feedback_if_query_is_empty() {
-    DemoStoryState mockStoryState = mock(DemoStoryState.class);
     when(mockStoryState.getQuery()).thenReturn("");
-
-    DemoUserStory mockDemoUserStory = mock(DemoUserStory.class);
-    when(mockDemoUserStory.getStoryState()).thenReturn(mockStoryState);
-    SearchPresenter searchPresenter = new SearchPresenter(mockDemoUserStory);
-    SearchView mockView = mock(SearchView.class);
-    searchPresenter.setView(mockView);
 
     searchPresenter.start();
 
@@ -41,14 +48,7 @@ public class SearchPresenterShould {
   }
 
   @Test public void show_error_message_if_state_has_error() {
-    DemoStoryState mockStoryState = mock(DemoStoryState.class);
     when(mockStoryState.getErrorMessage()).thenReturn("Fake error message");
-
-    DemoUserStory mockDemoUserStory = mock(DemoUserStory.class);
-    when(mockDemoUserStory.getStoryState()).thenReturn(mockStoryState);
-    SearchPresenter searchPresenter = new SearchPresenter(mockDemoUserStory);
-    SearchView mockView = mock(SearchView.class);
-    searchPresenter.setView(mockView);
 
     searchPresenter.start();
 

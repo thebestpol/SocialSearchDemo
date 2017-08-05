@@ -27,7 +27,10 @@ public class SearchPresenter {
   public void start() {
     storyState = demoUserStory.getStoryState();
     String query = storyState.getQuery();
-    if (query == null || query.isEmpty()) {
+    String errorMessage = storyState.getErrorMessage();
+    if (errorMessage != null) {
+      view.showFeedbackMessage(errorMessage);
+    } else if (query == null || query.isEmpty()) {
       view.showFeedbackMessage("Click on Search menu item to make a social search.");
     }
   }
