@@ -11,4 +11,6 @@ import java.util.List;
 
 public interface HistoryView {
   void loadHistoryData(List<HistoryData> historyData);
+
+  void showFeedbackMessage(String feedbackMessage);
 }
