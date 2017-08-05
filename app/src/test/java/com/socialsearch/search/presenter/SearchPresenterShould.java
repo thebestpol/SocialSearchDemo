@@ -216,4 +216,10 @@ public class SearchPresenterShould {
 
     verify(mockView).loadSocialData(eq(fakeStateSocialData));
   }
+
+  @Test public void on_method_call_navigate_to_history() {
+    searchPresenter.onHistoryItemSelected();
+
+    verify(mockDemoUserStory).navigateToHistory();
+  }
 }

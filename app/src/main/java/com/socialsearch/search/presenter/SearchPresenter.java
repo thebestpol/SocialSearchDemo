@@ -74,10 +74,13 @@ public class SearchPresenter {
 
   public void stop() {
     demoUserStory.updateState(storyState);
-
   }
 
   public void onQuerySubmitted(String query) {
     searchQueary(query);
+  }
+
+  public void onHistoryItemSelected() {
+    demoUserStory.navigateToHistory();
   }
 }

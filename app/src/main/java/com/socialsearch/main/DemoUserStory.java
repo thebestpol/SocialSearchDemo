@@ -2,8 +2,10 @@ package com.socialsearch.main;
 
 import android.os.Bundle;
 import android.support.annotation.VisibleForTesting;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import com.socialsearch.core.story.StoryContainer;
+import com.socialsearch.history.HistoryFragment;
 import com.socialsearch.main.state.DemoStoryState;
 import com.socialsearch.search.SocialSearchFragment;
 
@@ -53,5 +55,13 @@ public class DemoUserStory {
 
   public void updateState(DemoStoryState storyState) {
     this.storyState = storyState;
+  }
+
+  public void navigateToHistory() {
+    Fragment fragment = HistoryFragment.newInstance();
+    supportFragmentManager.beginTransaction()
+        .replace(containerId, fragment)
+        .addToBackStack(fragment.getClass().getSimpleName())
+        .commit();
   }
 }

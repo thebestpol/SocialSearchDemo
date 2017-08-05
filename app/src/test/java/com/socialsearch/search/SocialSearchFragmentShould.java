@@ -170,4 +170,14 @@ import static org.robolectric.Shadows.shadowOf;
     assertThat(recyclerView.getAdapter().getItemCount(), is(equalTo(1)));
   }
 
+  @Test public void on_history_menu_item_clicked_navigates_to_history() {
+    SocialSearchFragment fragment = new SocialSearchFragment();
+    SupportFragmentTestUtil.startVisibleFragment(fragment, MainActivity.class, R.id.container);
+
+    Menu optionsMenu = shadowOf(fragment.getActivity()).getOptionsMenu();
+    MenuItem historyItem = optionsMenu.findItem(R.id.history);
+    fragment.onOptionsItemSelected(historyItem);
+
+    verify(presenter).onHistoryItemSelected();
+  }
 }

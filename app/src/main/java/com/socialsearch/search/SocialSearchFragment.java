@@ -76,6 +76,13 @@ public class SocialSearchFragment extends Fragment implements SocialSearchView {
     progressTextView = ((TextView) progressView.findViewById(R.id.progressTextView));
   }
 
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() == R.id.history) {
+      presenter.onHistoryItemSelected();
+    }
+    return super.onOptionsItemSelected(item);
+  }
+
   @Override public void onResume() {
     super.onResume();
 
