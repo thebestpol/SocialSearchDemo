@@ -1,21 +1,17 @@
 package com.socialsearch.search;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import com.socialsearch.R;
-import com.socialsearch.core.di.HasComponent;
+import com.socialsearch.core.presenter.Presenter;
+import com.socialsearch.core.view.fragment.RootFragment;
+import com.socialsearch.core.view.manager.LayoutManagerProvider;
 import com.socialsearch.entity.SocialData;
-import com.socialsearch.main.di.MainComponent;
 import com.socialsearch.search.di.SearchModule;
 import com.socialsearch.search.presenter.SearchPresenter;
 import com.socialsearch.search.view.SocialSearchView;
@@ -29,11 +25,11 @@ import javax.inject.Inject;
  * SocialSearchFragment
  */
 
-public class SocialSearchFragment extends Fragment implements SocialSearchView {
+public class SocialSearchFragment extends RootFragment implements SocialSearchView {
 
   @Inject SearchPresenter presenter;
   @Inject SocialDataAdapter socialDataAdapter;
-  @Inject RecyclerView.LayoutManager layoutManager;
+  @Inject LayoutManagerProvider layoutManagerProvider;
 
   private RecyclerView recyclerView;
   private View progressView;
@@ -44,58 +40,45 @@ public class SocialSearchFragment extends Fragment implements SocialSearchView {
     return new SocialSearchFragment();
   }
 
-  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    getActivity().setTitle(R.string.search_label);
-    setHasOptionsMenu(true);
-
-    initializeInjector();
-  }
-
-  @Nullable @Override
-  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
-    return inflater.inflate(R.layout.fragment_search, container, false);
-  }
-
-  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-
-    initializeView(view);
-    initializePresenter();
-  }
-
-  private void initializeView(View view) {
+  @Override protected void initializeView(View view) {
     recyclerView = ((RecyclerView) view.findViewById(R.id.recyclerView));
-    recyclerView.setLayoutManager(layoutManager);
+    recyclerView.setLayoutManager(layoutManagerProvider.getLayoutManager());
     recyclerView.setAdapter(socialDataAdapter);
 
     progressView = view.findViewById(R.id.progress);
-    feedbackTextView = ((TextView) view.findViewById(R.id.feedbackTextView));
-    progressTextView = ((TextView) progressView.findViewById(R.id.progressTextView));
+    feedbackTextView = (TextView) view.findViewById(R.id.feedbackTextView);
+    progressTextView = (TextView) progressView.findViewById(R.id.progressTextView);
   }
 
-  @Override public void onResume() {
-    super.onResume();
-
-    presenter.start();
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() == R.id.history) {
+      presenter.onHistoryItemSelected();
+    }
+    return super.onOptionsItemSelected(item);
   }
 
-  @Override public void onStop() {
-    super.onStop();
-
-    presenter.stop();
+  @Override protected Presenter getPresenter() {
+    return presenter;
   }
 
-  private void initializePresenter() {
+  @Override protected void initializePresenter() {
     presenter.setView(this);
   }
 
-  private void initializeInjector() {
-    ((HasComponent<MainComponent>) getActivity()).getComponent()
-        .createSearchComponent(new SearchModule())
-        .inject(this);
+  @Override protected void initializeInjector() {
+    getMainComponent().createSearchComponent(new SearchModule()).inject(this);
+  }
+
+  @Override protected int getTitleResource() {
+    return R.string.search_label;
+  }
+
+  @Override protected boolean enableOptionsMenu() {
+    return true;
+  }
+
+  @Override protected int getLayoutResource() {
+    return R.layout.fragment_search;
   }
 
   @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

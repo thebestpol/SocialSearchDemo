@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import com.socialsearch.R;
 import com.socialsearch.application.di.DemoApplicationComponent;
 import com.socialsearch.core.di.HasComponent;
@@ -32,6 +33,10 @@ public class MainActivity extends AppCompatActivity
     } else {
       demoUserStory.restoreState(savedInstanceState);
     }
+  }
+
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+    return super.onOptionsItemSelected(item);
   }
 
   @Override protected void onSaveInstanceState(Bundle outState) {

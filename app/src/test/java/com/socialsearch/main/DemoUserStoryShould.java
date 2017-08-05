@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
@@ -68,7 +69,7 @@ public class DemoUserStoryShould {
 
   @Test public void store_story_state_in_activity_outstate() {
     Bundle spyBundle = spy(new Bundle());
-    doNothing().when(spyBundle).putParcelable(Mockito.anyString(), Mockito.any());
+    doNothing().when(spyBundle).putParcelable(anyString(), Mockito.any());
     DemoStoryState spyStoryState = spy(new DemoStoryState());
     DemoUserStory spyDemoUserStory = new DemoUserStory() {
       @Override public DemoStoryState initializeStoryState() {
@@ -79,5 +80,43 @@ public class DemoUserStoryShould {
     spyDemoUserStory.saveState(spyBundle);
 
     verify(spyBundle).putParcelable(eq(DemoUserStory.KEY_STATE), eq(spyStoryState));
+  }
+
+  @Test public void replace_search_screen_by_history_screen() {
+    FragmentTransaction mockFragmentTransaction = mock(FragmentTransaction.class);
+    when(mockFragmentTransaction.replace(anyInt(), any(Fragment.class))).thenReturn(
+        mockFragmentTransaction);
+    when(mockFragmentTransaction.addToBackStack(anyString())).thenReturn(mockFragmentTransaction);
+
+    FragmentManager mockFragmentManager = mock(FragmentManager.class);
+    when(mockFragmentManager.beginTransaction()).thenReturn(mockFragmentTransaction);
+
+    MainActivity mockMainActivity = mock(MainActivity.class);
+    when(mockMainActivity.getSupportManager()).thenReturn(mockFragmentManager);
+    when(mockMainActivity.getContainerId()).thenReturn(R.id.container);
+
+    DemoUserStory demoUserStory = new DemoUserStory();
+    demoUserStory.initialize(mockMainActivity);
+
+    demoUserStory.navigateToHistory();
+
+    verify(mockFragmentManager).beginTransaction();
+    verify(mockFragmentTransaction).replace(eq(R.id.container), any(Fragment.class));
+    verify(mockFragmentTransaction).addToBackStack("HistoryFragment");
+    verify(mockFragmentTransaction).commit();
+  }
+
+  @Test public void pop_backstack_on_navigates_to_search() {
+    FragmentManager mockFragmentManager = mock(FragmentManager.class);
+
+    MainActivity mockMainActivity = mock(MainActivity.class);
+    when(mockMainActivity.getSupportManager()).thenReturn(mockFragmentManager);
+
+    DemoUserStory demoUserStory = new DemoUserStory();
+    demoUserStory.initialize(mockMainActivity);
+
+    demoUserStory.navigateToSearch();
+
+    verify(mockFragmentManager).popBackStack();
   }
 }

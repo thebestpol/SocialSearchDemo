@@ -24,7 +24,7 @@ public class DemoStoryState implements Parcelable {
     }
   };
   private String query;
-  private String errorMessage;
+  private String feedBackMessage;
   private List<SocialData> socialData;
 
   public DemoStoryState() {
@@ -32,7 +32,7 @@ public class DemoStoryState implements Parcelable {
 
   protected DemoStoryState(Parcel in) {
     this.query = in.readString();
-    this.errorMessage = in.readString();
+    this.feedBackMessage = in.readString();
     this.socialData = new ArrayList<SocialData>();
     in.readList(this.socialData, SocialData.class.getClassLoader());
   }
@@ -45,12 +45,12 @@ public class DemoStoryState implements Parcelable {
     this.query = query;
   }
 
-  public String getErrorMessage() {
-    return errorMessage;
+  public String getFeedBackMessage() {
+    return feedBackMessage;
   }
 
-  public void setFeedbackMessage(String errorMessage) {
-    this.errorMessage = errorMessage;
+  public void setFeedbackMessage(String feedbackMessage) {
+    this.feedBackMessage = feedbackMessage;
   }
 
   public void setQueryResponse(List<SocialData> socialData) {
@@ -67,15 +67,19 @@ public class DemoStoryState implements Parcelable {
 
   @Override public void writeToParcel(Parcel dest, int flags) {
     dest.writeString(this.query);
-    dest.writeString(this.errorMessage);
+    dest.writeString(this.feedBackMessage);
     dest.writeList(this.socialData);
   }
 
-  public void clearSocialData() {
+  public void clearQueryResponse() {
     socialData = null;
   }
 
   public void clearQuery() {
     query = null;
+  }
+
+  public void clearFeedbackMessage() {
+    feedBackMessage = null;
   }
 }

@@ -60,7 +60,7 @@ public class SearchPresenterShould {
   }
 
   @Test public void show_error_message_if_state_has_error() {
-    when(mockStoryState.getErrorMessage()).thenReturn("Fake error message");
+    when(mockStoryState.getFeedBackMessage()).thenReturn("Fake error message");
 
     searchPresenter.start();
 
@@ -148,6 +148,8 @@ public class SearchPresenterShould {
 
     verify(mockStoryState).setQuery("Fake query");
     verify(mockStoryState).setQueryResponse(Mockito.anyListOf(SocialData.class));
+    verify(mockStoryState).clearFeedbackMessage();
+
   }
 
   @Test public void update_story_state_on_model_empty_response_from_event() {
@@ -161,7 +163,7 @@ public class SearchPresenterShould {
     searchPresenter.onQuerySubmitted("Fake Query Submitted");
 
     verify(mockStoryState).setFeedbackMessage("Any results found.");
-    verify(mockStoryState).clearSocialData();
+    verify(mockStoryState).clearQueryResponse();
     verify(mockStoryState).clearQuery();
   }
 
@@ -175,7 +177,7 @@ public class SearchPresenterShould {
     searchPresenter.start();
 
     verify(mockStoryState).setFeedbackMessage("Any results found.");
-    verify(mockStoryState).clearSocialData();
+    verify(mockStoryState).clearQueryResponse();
     verify(mockStoryState).clearQuery();
   }
 
@@ -190,7 +192,7 @@ public class SearchPresenterShould {
     searchPresenter.onQuerySubmitted("Fake Query Submitted");
 
     verify(mockStoryState).setFeedbackMessage("Fake error message");
-    verify(mockStoryState).clearSocialData();
+    verify(mockStoryState).clearQueryResponse();
     verify(mockStoryState).clearQuery();
   }
 
@@ -204,7 +206,7 @@ public class SearchPresenterShould {
     searchPresenter.start();
 
     verify(mockStoryState).setFeedbackMessage("Fake error message");
-    verify(mockStoryState).clearSocialData();
+    verify(mockStoryState).clearQueryResponse();
     verify(mockStoryState).clearQuery();
   }
 
@@ -215,5 +217,11 @@ public class SearchPresenterShould {
     searchPresenter.start();
 
     verify(mockView).loadSocialData(eq(fakeStateSocialData));
+  }
+
+  @Test public void on_method_call_navigate_to_history() {
+    searchPresenter.onHistoryItemSelected();
+
+    verify(mockDemoUserStory).navigateToHistory();
   }
 }

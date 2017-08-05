@@ -1,12 +1,12 @@
 package com.socialsearch.search.di;
 
 import android.content.Context;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import com.socialsearch.core.di.PerFragment;
 import com.socialsearch.core.model.Callback;
 import com.socialsearch.core.view.ImageLoader;
+import com.socialsearch.core.view.manager.GirdLayoutManagerProvider;
+import com.socialsearch.core.view.manager.LayoutManagerProvider;
+import com.socialsearch.core.view.manager.LinerLayoutManagerProvider;
 import com.socialsearch.entity.SocialData;
 import com.socialsearch.main.DemoUserStory;
 import com.socialsearch.search.model.SearchModel;
@@ -49,8 +49,9 @@ import javax.inject.Named;
     return new SocialDataAdapter(imageLoader);
   }
 
-  @Provides @PerFragment public RecyclerView.LayoutManager provideLayoutManager(Context context,
+  @Provides @PerFragment public LayoutManagerProvider provideLayoutManagerProvider(Context context,
       @Named("screenOrientation") boolean isLandscape) {
-    return isLandscape ? new GridLayoutManager(context, 3) : new LinearLayoutManager(context);
+    return isLandscape ? new GirdLayoutManagerProvider(context)
+        : new LinerLayoutManagerProvider(context);
   }
 }

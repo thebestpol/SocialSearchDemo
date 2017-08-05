@@ -40,9 +40,9 @@ import static org.robolectric.Shadows.shadowOf;
 
   @Rule public RobolectricMockComponentRule rule = new RobolectricMockComponentRule();
 
-  @Spy DemoUserStory mockUsetStory = new DemoUserStory();
+  @Spy DemoUserStory mockUserStory = new DemoUserStory();
 
-  @Mock SearchPresenter presenter;
+  @Mock SearchPresenter mockPresenter;
 
   @Test public void contain_two_menu_item() {
     MainActivity mainActivity = Robolectric.setupActivity(MainActivity.class);
@@ -67,25 +67,25 @@ import static org.robolectric.Shadows.shadowOf;
 
   @Test public void bind_lifecycle_start_to_presenter() {
     // Disabling user story behaviour to enable fragment isolated test
-    doNothing().when(mockUsetStory).start();
+    doNothing().when(mockUserStory).start();
 
     SocialSearchFragment fragment = new SocialSearchFragment();
     SupportFragmentTestUtil.startVisibleFragment(fragment, MainActivity.class, R.id.container);
 
-    verify(presenter).setView(eq(fragment));
-    verify(presenter).start();
+    verify(mockPresenter).setView(eq(fragment));
+    verify(mockPresenter).start();
   }
 
   @Test public void bind_lifecycle_end_to_presenter() {
     // Disabling user story behaviour to enable fragment isolated test
-    doNothing().when(mockUsetStory).start();
+    doNothing().when(mockUserStory).start();
 
     SocialSearchFragment fragment = new SocialSearchFragment();
     SupportFragmentTestUtil.startVisibleFragment(fragment, MainActivity.class, R.id.container);
 
     fragment.onStop();
 
-    verify(presenter).stop();
+    verify(mockPresenter).stop();
   }
 
   @Test public void start_fragment_view() {
@@ -170,4 +170,14 @@ import static org.robolectric.Shadows.shadowOf;
     assertThat(recyclerView.getAdapter().getItemCount(), is(equalTo(1)));
   }
 
+  @Test public void on_history_menu_item_clicked_navigates_to_history() {
+    SocialSearchFragment fragment = new SocialSearchFragment();
+    SupportFragmentTestUtil.startVisibleFragment(fragment, MainActivity.class, R.id.container);
+
+    Menu optionsMenu = shadowOf(fragment.getActivity()).getOptionsMenu();
+    MenuItem historyItem = optionsMenu.findItem(R.id.history);
+    fragment.onOptionsItemSelected(historyItem);
+
+    verify(mockPresenter).onHistoryItemSelected();
+  }
 }
