@@ -26,6 +26,8 @@ public class HistoryFragment extends RootFragment implements HistoryView {
 
   @Inject HistoryPresenter presenter;
   @Inject HistoryDataAdapter adapter;
+  @Inject RecyclerView.LayoutManager layoutManager;
+
   private RecyclerView recyclerView;
   private TextView feedbackTextView;
 
@@ -43,6 +45,8 @@ public class HistoryFragment extends RootFragment implements HistoryView {
 
   @Override protected void initializeView(View view) {
     recyclerView = ((RecyclerView) view.findViewById(R.id.recyclerView));
+    recyclerView.setLayoutManager(layoutManager);
+    recyclerView.setAdapter(adapter);
     feedbackTextView = ((TextView) view.findViewById(R.id.feedbackTextView));
   }
 
