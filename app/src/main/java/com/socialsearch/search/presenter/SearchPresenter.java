@@ -47,9 +47,12 @@ public class SearchPresenter {
     view.showProgress("Searching " + query + " in social media...");
     searchModel.obtainSocialData(query, new Callback<List<SocialData>>() {
       @Override public void onSuccess(List<SocialData> response) {
+        storyState.setQuery(query);
+
         if (response.isEmpty()) {
           view.showFeedbackMessage("Any results found.");
         } else {
+          storyState.setQueryResponse(response);
           view.loadSocialData(response);
         }
       }

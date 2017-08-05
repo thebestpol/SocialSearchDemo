@@ -127,6 +127,8 @@ public class SearchPresenterShould {
       return null;
     }).when(mockSearchModel).obtainSocialData(Mockito.anyString(), any(Callback.class));
 
+    searchPresenter.start();
+
     searchPresenter.onQuerySubmitted("Fake Query Submitted");
 
     verify(mockStoryState).setQuery("Fake Query Submitted");
@@ -143,7 +145,61 @@ public class SearchPresenterShould {
 
     searchPresenter.start();
 
-    verify(mockStoryState).setQuery("Fake query ");
+    verify(mockStoryState).setQuery("Fake query");
     verify(mockStoryState).setQueryResponse(Mockito.anyListOf(SocialData.class));
+  }
+
+  @Test public void update_story_state_on_model_empty_response_from_event() {
+    doAnswer(invocation -> {
+      ((Callback<List<SocialData>>) invocation.getArguments()[1]).onSuccess(new ArrayList<>());
+      return null;
+    }).when(mockSearchModel).obtainSocialData(Mockito.anyString(), any(Callback.class));
+
+    searchPresenter.start();
+
+    searchPresenter.onQuerySubmitted("Fake Query Submitted");
+
+    verify(mockStoryState).setFeedbackMessage("Any results found.");
+    verify(mockStoryState).clearSocialData();
+  }
+
+  @Test public void update_story_state_on_empty_response() {
+    doAnswer(invocation -> {
+      ((Callback<List<SocialData>>) invocation.getArguments()[1]).onSuccess(new ArrayList<>());
+      return null;
+    }).when(mockSearchModel).obtainSocialData(Mockito.anyString(), any(Callback.class));
+    when(mockStoryState.getQuery()).thenReturn("Fake query");
+
+    searchPresenter.start();
+
+    verify(mockStoryState).setFeedbackMessage("Any results found.");
+    verify(mockStoryState).clearSocialData();
+  }
+
+  @Test public void update_story_state_on_model_error_from_event() {
+    doAnswer(invocation -> {
+      ((Callback<List<SocialData>>) invocation.getArguments()[1]).onError("Fake error message");
+      return null;
+    }).when(mockSearchModel).obtainSocialData(Mockito.anyString(), any(Callback.class));
+
+    searchPresenter.start();
+
+    searchPresenter.onQuerySubmitted("Fake Query Submitted");
+
+    verify(mockStoryState).setFeedbackMessage("Fake error message");
+    verify(mockStoryState).clearSocialData();
+  }
+
+  @Test public void update_story_state_on_error_response() {
+    doAnswer(invocation -> {
+      ((Callback<List<SocialData>>) invocation.getArguments()[1]).onError("Fake error message");
+      return null;
+    }).when(mockSearchModel).obtainSocialData(Mockito.anyString(), any(Callback.class));
+    when(mockStoryState.getQuery()).thenReturn("Fake query");
+
+    searchPresenter.start();
+
+    verify(mockStoryState).setFeedbackMessage("Fake error message");
+    verify(mockStoryState).clearSocialData();
   }
 }

@@ -49,7 +49,7 @@ public class DemoStoryState implements Parcelable {
     return errorMessage;
   }
 
-  public void setErrorMessage(String errorMessage) {
+  public void setFeedbackMessage(String errorMessage) {
     this.errorMessage = errorMessage;
   }
 
@@ -69,5 +69,9 @@ public class DemoStoryState implements Parcelable {
     dest.writeString(this.query);
     dest.writeString(this.errorMessage);
     dest.writeList(this.socialData);
+  }
+
+  public void clearSocialData() {
+    socialData = null;
   }
 }

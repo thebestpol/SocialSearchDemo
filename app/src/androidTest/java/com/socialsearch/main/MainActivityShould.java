@@ -50,7 +50,7 @@ public class MainActivityShould {
 
   @Test public void display_error_message() {
     DemoStoryState stubStoryState = new DemoStoryState();
-    stubStoryState.setErrorMessage("Fake error message");
+    stubStoryState.setFeedbackMessage("Fake error message");
     when(spyDemoStoryState.getStoryState()).thenReturn(stubStoryState);
 
     activityTestRule.launchActivity(null);
