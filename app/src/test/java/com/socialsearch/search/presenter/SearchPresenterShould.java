@@ -1,10 +1,13 @@
 package com.socialsearch.search.presenter;
 
 import com.socialsearch.core.model.Callback;
+import com.socialsearch.entity.SocialData;
 import com.socialsearch.main.DemoUserStory;
 import com.socialsearch.main.state.DemoStoryState;
 import com.socialsearch.search.model.SearchModel;
 import com.socialsearch.search.view.SearchView;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -75,11 +78,23 @@ public class SearchPresenterShould {
     doAnswer(invocation -> {
       ((Callback) invocation.getArguments()[1]).onError("Fake model error message");
       return null;
-    }).when(mockSearchModel).obtainSocialData(Mockito.anyString(), Mockito.any(Callback.class));
+    }).when(mockSearchModel).obtainSocialData(Mockito.anyString(), any(Callback.class));
     when(mockStoryState.getQuery()).thenReturn("Fake query");
 
     searchPresenter.start();
 
     verify(mockView).showFeedbackMessage("Fake model error message");
+  }
+
+  @Test public void show_empty_message_on_empty_model_response() {
+    doAnswer(invocation -> {
+      ((Callback<List<SocialData>>) invocation.getArguments()[1]).onSuccess(new ArrayList<>());
+      return null;
+    }).when(mockSearchModel).obtainSocialData(Mockito.anyString(), any(Callback.class));
+    when(mockStoryState.getQuery()).thenReturn("Fake query");
+
+    searchPresenter.start();
+
+    verify(mockView).showFeedbackMessage("Any results found.");
   }
 }

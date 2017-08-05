@@ -12,10 +12,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.socialsearch.R;
 import com.socialsearch.core.di.HasComponent;
+import com.socialsearch.entity.SocialData;
 import com.socialsearch.main.di.MainComponent;
 import com.socialsearch.search.di.SearchModule;
 import com.socialsearch.search.presenter.SearchPresenter;
 import com.socialsearch.search.view.SearchView;
+import java.util.List;
 import javax.inject.Inject;
 
 /**
@@ -115,5 +117,9 @@ public class SearchFragment extends Fragment implements SearchView {
     progressView.setVisibility(View.VISIBLE);
     feedbackTextView.setVisibility(View.GONE);
     recyclerView.setVisibility(View.GONE);
+  }
+
+  @Override public void loadSocialData(List<SocialData> response) {
+
   }
 }
