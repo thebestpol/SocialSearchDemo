@@ -39,4 +39,19 @@ public class SearchPresenterShould {
 
     verify(mockView).showFeedbackMessage("Click on Search menu item to make a social search.");
   }
+
+  @Test public void show_error_message_if_state_has_error() {
+    DemoStoryState mockStoryState = mock(DemoStoryState.class);
+    when(mockStoryState.getErrorMessage()).thenReturn("Fake error message");
+
+    DemoUserStory mockDemoUserStory = mock(DemoUserStory.class);
+    when(mockDemoUserStory.getStoryState()).thenReturn(mockStoryState);
+    SearchPresenter searchPresenter = new SearchPresenter(mockDemoUserStory);
+    SearchView mockView = mock(SearchView.class);
+    searchPresenter.setView(mockView);
+
+    searchPresenter.start();
+
+    verify(mockView).showFeedbackMessage("Fake error message");
+  }
 }
