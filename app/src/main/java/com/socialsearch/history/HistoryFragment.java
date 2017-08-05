@@ -24,7 +24,7 @@ public class HistoryFragment extends RootFragment {
   }
 
   @Override protected void initializeInjector() {
-
+    
   }
 
   @Override protected int getTitleResource() {

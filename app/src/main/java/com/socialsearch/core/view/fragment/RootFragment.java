@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.socialsearch.core.di.HasComponent;
+import com.socialsearch.main.di.MainComponent;
 
 /**
  * SocialSearchDemo
@@ -50,4 +52,8 @@ public abstract class RootFragment extends Fragment {
   protected abstract boolean enableOptionsMenu();
 
   protected abstract @LayoutRes int getLayoutResource();
+
+  protected MainComponent getMainComponent() {
+    return ((HasComponent<MainComponent>) getActivity()).getComponent();
+  }
 }
