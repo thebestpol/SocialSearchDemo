@@ -26,7 +26,9 @@ public class DemoUserStory {
   }
 
   public void start() {
-    supportFragmentManager.beginTransaction().add(containerId, SearchFragment.newInstance()).commit();
+    supportFragmentManager.beginTransaction()
+        .add(containerId, SearchFragment.newInstance())
+        .commit();
   }
 
   public void restoreState(Bundle savedState) {

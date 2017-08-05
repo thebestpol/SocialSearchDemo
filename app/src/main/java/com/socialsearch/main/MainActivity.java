@@ -8,12 +8,15 @@ import com.socialsearch.R;
 import com.socialsearch.application.di.DemoApplicationComponent;
 import com.socialsearch.core.di.HasComponent;
 import com.socialsearch.core.story.StoryContainer;
+import com.socialsearch.main.di.MainComponent;
 import com.socialsearch.main.di.MainModule;
 import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity implements StoryContainer {
+public class MainActivity extends AppCompatActivity
+    implements StoryContainer, HasComponent<MainComponent> {
 
   @Inject DemoUserStory demoUserStory;
+  private MainComponent mainComponent;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -37,9 +40,9 @@ public class MainActivity extends AppCompatActivity implements StoryContainer {
   }
 
   private void initializeInjector() {
-    ((HasComponent<DemoApplicationComponent>) getApplication()).getComponent()
-        .createMainComponent(new MainModule())
-        .inject(this);
+    mainComponent = ((HasComponent<DemoApplicationComponent>) getApplication()).getComponent()
+        .createMainComponent(new MainModule());
+    mainComponent.inject(this);
   }
 
   @IdRes @Override public int getContainerId() {
@@ -48,5 +51,9 @@ public class MainActivity extends AppCompatActivity implements StoryContainer {
 
   @Override public FragmentManager getSupportManager() {
     return getSupportFragmentManager();
+  }
+
+  @Override public MainComponent getComponent() {
+    return mainComponent;
   }
 }

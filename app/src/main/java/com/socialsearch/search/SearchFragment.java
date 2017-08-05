@@ -3,11 +3,14 @@ package com.socialsearch.search;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import com.socialsearch.R;
+import com.socialsearch.core.di.HasComponent;
+import com.socialsearch.main.di.MainComponent;
+import com.socialsearch.search.di.SearchModule;
+import com.socialsearch.search.presenter.SearchPresenter;
+import javax.inject.Inject;
 
 /**
  * SocialSearchDemo
@@ -16,6 +19,8 @@ import com.socialsearch.R;
  */
 
 public class SearchFragment extends Fragment {
+
+  @Inject SearchPresenter presenter;
 
   public static SearchFragment newInstance() {
     return new SearchFragment();
@@ -26,21 +31,46 @@ public class SearchFragment extends Fragment {
 
     getActivity().setTitle(R.string.search_label);
     setHasOptionsMenu(true);
+
+    initializeInjector();
+    initializePresenter();
+  }
+
+  @Override public void onResume() {
+    super.onResume();
+
+    presenter.start();
+  }
+
+  @Override public void onStop() {
+    super.onStop();
+
+    presenter.stop();
+  }
+
+  private void initializePresenter() {
+    presenter.setView(this);
+  }
+
+  private void initializeInjector() {
+    ((HasComponent<MainComponent>) getActivity()).getComponent()
+        .createSearchComponent(new SearchModule())
+        .inject(this);
   }
 
   @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     inflater.inflate(R.menu.search_menu, menu);
 
-    MenuItem item = menu.findItem(R.id.search);
-    ((SearchView) item.getActionView()).setOnQueryTextListener(
-        new SearchView.OnQueryTextListener() {
-          @Override public boolean onQueryTextSubmit(String query) {
-            return false;
-          }
-
-          @Override public boolean onQueryTextChange(String newText) {
-            return false;
-          }
-        });
+    //MenuItem item = menu.findItem(R.id.search);
+    //((SearchView) item.getActionView()).setOnQueryTextListener(
+    //    new SearchView.OnQueryTextListener() {
+    //      @Override public boolean onQueryTextSubmit(String query) {
+    //        return false;
+    //      }
+    //
+    //      @Override public boolean onQueryTextChange(String newText) {
+    //        return false;
+    //      }
+    //    });
   }
 }

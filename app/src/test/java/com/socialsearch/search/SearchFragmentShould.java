@@ -11,6 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.shadows.support.v4.SupportFragmentTestUtil;
@@ -33,7 +34,7 @@ import static org.robolectric.Shadows.shadowOf;
 
   @Rule public RobolectricMockComponentRule rule = new RobolectricMockComponentRule();
 
-  @Mock DemoUserStory mockUsetStory;
+  @Spy DemoUserStory mockUsetStory = new DemoUserStory();
 
   @Mock SearchPresenter presenter;
 
