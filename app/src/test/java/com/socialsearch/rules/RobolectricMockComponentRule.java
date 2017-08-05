@@ -9,13 +9,13 @@ import org.robolectric.RuntimeEnvironment;
 /**
  * SocialSearchDemo
  * com.socialsearch.rules
- * RobolectricMockApplicationComponentRule
+ * RobolectricMockComponentRule
  */
 
-public class RobolectricMockApplicationComponentRule
+public class RobolectricMockComponentRule
     extends DaggerMockRule<DemoApplicationComponent> {
 
-  public RobolectricMockApplicationComponentRule() {
+  public RobolectricMockComponentRule() {
     super(DemoApplicationComponent.class, new DemoApplicationModule(getApp()));
     set(component -> getApp().setComponent(component));
   }

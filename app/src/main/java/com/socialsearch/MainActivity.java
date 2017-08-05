@@ -1,14 +1,17 @@
 package com.socialsearch;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import com.socialsearch.application.di.DemoApplicationComponent;
 import com.socialsearch.core.di.HasComponent;
+import com.socialsearch.core.story.StoryContainer;
 import com.socialsearch.main.DemoUserStory;
 import com.socialsearch.main.di.MainModule;
 import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements StoryContainer {
 
   @Inject DemoUserStory demoUserStory;
 
@@ -37,5 +40,13 @@ public class MainActivity extends AppCompatActivity {
     ((HasComponent<DemoApplicationComponent>) getApplication()).getComponent()
         .createMainComponent(new MainModule())
         .inject(this);
+  }
+
+  @IdRes @Override public int getContainerId() {
+    return R.id.container;
+  }
+
+  @Override public FragmentManager getSupportManager() {
+    return getSupportFragmentManager();
   }
 }

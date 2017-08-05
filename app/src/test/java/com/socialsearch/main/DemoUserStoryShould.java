@@ -28,17 +28,22 @@ public class DemoUserStoryShould {
 
     demoUserStory.initialize(mockMainActivity);
 
-    verify(mockMainActivity).getSupportFragmentManager();
+    verify(mockMainActivity).getSupportManager();
+    verify(mockMainActivity).getContainerId();
   }
 
   @Test public void add_initial_screen_fragment_on_start() {
     FragmentTransaction mockFragmentTransaction = mock(FragmentTransaction.class);
     when(mockFragmentTransaction.add(anyInt(), any(Fragment.class))).thenReturn(
         mockFragmentTransaction);
+
     FragmentManager mockFragmentManager = mock(FragmentManager.class);
     when(mockFragmentManager.beginTransaction()).thenReturn(mockFragmentTransaction);
+
     MainActivity mockMainActivity = mock(MainActivity.class);
-    when(mockMainActivity.getSupportFragmentManager()).thenReturn(mockFragmentManager);
+    when(mockMainActivity.getSupportManager()).thenReturn(mockFragmentManager);
+    when(mockMainActivity.getContainerId()).thenReturn(R.id.container);
+
     DemoUserStory demoUserStory = new DemoUserStory();
     demoUserStory.initialize(mockMainActivity);
 

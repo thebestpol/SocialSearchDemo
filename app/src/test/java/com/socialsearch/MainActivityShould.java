@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import com.socialsearch.main.DemoUserStory;
-import com.socialsearch.rules.RobolectricMockApplicationComponentRule;
+import com.socialsearch.rules.RobolectricMockComponentRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,8 +27,8 @@ import static org.robolectric.Shadows.shadowOf;
  */
 @RunWith(RobolectricTestRunner.class) public class MainActivityShould {
 
-  @Rule public RobolectricMockApplicationComponentRule rule =
-      new RobolectricMockApplicationComponentRule();
+  @Rule public RobolectricMockComponentRule rule =
+      new RobolectricMockComponentRule();
 
   @Spy DemoUserStory mockUserStory = new DemoUserStory();
 
