@@ -114,6 +114,7 @@ public class SearchPresenterShould {
   }
 
   @Test public void delegate_query_to_model_on_trigger() {
+    searchPresenter.start();
     searchPresenter.onQuerySubmitted("Fake query submitted");
 
     verify(mockView).showProgress("Searching Fake query submitted in social media...");
@@ -161,6 +162,7 @@ public class SearchPresenterShould {
 
     verify(mockStoryState).setFeedbackMessage("Any results found.");
     verify(mockStoryState).clearSocialData();
+    verify(mockStoryState).clearQuery();
   }
 
   @Test public void update_story_state_on_empty_response() {
@@ -174,6 +176,7 @@ public class SearchPresenterShould {
 
     verify(mockStoryState).setFeedbackMessage("Any results found.");
     verify(mockStoryState).clearSocialData();
+    verify(mockStoryState).clearQuery();
   }
 
   @Test public void update_story_state_on_model_error_from_event() {
@@ -188,6 +191,7 @@ public class SearchPresenterShould {
 
     verify(mockStoryState).setFeedbackMessage("Fake error message");
     verify(mockStoryState).clearSocialData();
+    verify(mockStoryState).clearQuery();
   }
 
   @Test public void update_story_state_on_error_response() {
@@ -201,5 +205,6 @@ public class SearchPresenterShould {
 
     verify(mockStoryState).setFeedbackMessage("Fake error message");
     verify(mockStoryState).clearSocialData();
+    verify(mockStoryState).clearQuery();
   }
 }

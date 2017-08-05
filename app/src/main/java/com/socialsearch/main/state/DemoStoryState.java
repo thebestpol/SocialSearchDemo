@@ -74,4 +74,8 @@ public class DemoStoryState implements Parcelable {
   public void clearSocialData() {
     socialData = null;
   }
+
+  public void clearQuery() {
+    query = null;
+  }
 }

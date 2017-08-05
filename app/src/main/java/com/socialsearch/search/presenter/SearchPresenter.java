@@ -44,13 +44,12 @@ public class SearchPresenter {
   }
 
   private void searchQueary(String query) {
+    storyState.setQuery(query);
     view.showProgress("Searching " + query + " in social media...");
     searchModel.obtainSocialData(query, new Callback<List<SocialData>>() {
       @Override public void onSuccess(List<SocialData> response) {
-        storyState.setQuery(query);
-
         if (response.isEmpty()) {
-          view.showFeedbackMessage("Any results found.");
+          onFeedbackEvent("Any results found.");
         } else {
           storyState.setQueryResponse(response);
           view.loadSocialData(response);
@@ -58,9 +57,16 @@ public class SearchPresenter {
       }
 
       @Override public void onError(String errorMessage) {
-        view.showFeedbackMessage(errorMessage);
+        onFeedbackEvent(errorMessage);
       }
     });
+  }
+
+  private void onFeedbackEvent(String errorMessage) {
+    storyState.setFeedbackMessage(errorMessage);
+    storyState.clearSocialData();
+    storyState.clearQuery();
+    view.showFeedbackMessage(errorMessage);
   }
 
   public void stop() {
