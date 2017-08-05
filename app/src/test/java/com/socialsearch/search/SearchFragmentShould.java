@@ -2,6 +2,7 @@ package com.socialsearch.search;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import com.socialsearch.R;
 import com.socialsearch.main.DemoUserStory;
 import com.socialsearch.main.MainActivity;
@@ -87,5 +88,30 @@ import static org.robolectric.Shadows.shadowOf;
     SupportFragmentTestUtil.startVisibleFragment(fragment, MainActivity.class, R.id.container);
 
     assertThat(fragment.getView(), notNullValue());
+  }
+
+  @Test public void contain_recycler_view() {
+    SearchFragment fragment = new SearchFragment();
+    SupportFragmentTestUtil.startVisibleFragment(fragment, MainActivity.class, R.id.container);
+
+    assertThat(fragment.getView().findViewById(R.id.recyclerView), notNullValue());
+  }
+
+  @Test public void contain_feedback_view() {
+    SearchFragment fragment = new SearchFragment();
+    SupportFragmentTestUtil.startVisibleFragment(fragment, MainActivity.class, R.id.container);
+
+    View feedbackTextView = fragment.getView().findViewById(R.id.feedbackTextView);
+    assertThat(feedbackTextView, notNullValue());
+    assertThat(feedbackTextView.getVisibility(), is(equalTo(View.GONE)));
+  }
+
+  @Test public void contain_progress_view() {
+    SearchFragment fragment = new SearchFragment();
+    SupportFragmentTestUtil.startVisibleFragment(fragment, MainActivity.class, R.id.container);
+
+    View progressView = fragment.getView().findViewById(R.id.progress);
+    assertThat(progressView, notNullValue());
+    assertThat(progressView.getVisibility(), is(equalTo(View.GONE)));
   }
 }
