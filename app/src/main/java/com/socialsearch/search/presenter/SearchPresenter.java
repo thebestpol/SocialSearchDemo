@@ -14,16 +14,22 @@ public class SearchPresenter {
 
   private DemoUserStory demoUserStory;
   private DemoStoryState storyState;
+  private SearchView view;
 
   public SearchPresenter(DemoUserStory demoUserStory) {
     this.demoUserStory = demoUserStory;
   }
 
   public void setView(SearchView view) {
+    this.view = view;
   }
 
   public void start() {
     storyState = demoUserStory.getStoryState();
+    String query = storyState.getQuery();
+    if (query == null || query.isEmpty()) {
+      view.showFeedbackMessage("Click on Search menu item to make a social search.");
+    }
   }
 
   public void stop() {

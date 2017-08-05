@@ -37,6 +37,6 @@ public class SearchPresenterShould {
 
     searchPresenter.start();
 
-    verify(mockView).showFeedbackMessage("Click on menu item to make a social search");
+    verify(mockView).showFeedbackMessage("Click on Search menu item to make a social search.");
   }
 }
