@@ -3,16 +3,20 @@ package com.socialsearch.history;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import com.socialsearch.R;
 import com.socialsearch.history.presenter.HistoryPresenter;
+import com.socialsearch.history.view.adapter.HistoryDataAdapter;
 import com.socialsearch.main.DemoUserStory;
 import com.socialsearch.main.MainActivity;
 import com.socialsearch.rules.RobolectricMockComponentRule;
+import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.shadows.support.v4.SupportFragmentTestUtil;
@@ -38,6 +42,8 @@ import static org.robolectric.Shadows.shadowOf;
   @Spy DemoUserStory mockUserStory = new DemoUserStory();
 
   @Mock HistoryPresenter mockPresenter;
+
+  @Mock HistoryDataAdapter mockHistoryDataAdapter;
 
   private HistoryFragment historyFragment;
 
@@ -95,5 +101,29 @@ import static org.robolectric.Shadows.shadowOf;
 
     assertThat(feedbackTextView, notNullValue());
     assertThat(feedbackTextView.getVisibility(), is(equalTo(View.GONE)));
+  }
+
+  @Test public void show_feedback_on_method_call_and_modify_view_visibility() {
+    View fragmentView = historyFragment.getView();
+
+    historyFragment.showFeedbackMessage("Fake feedback message");
+
+    TextView feedbackTextView = (TextView) fragmentView.findViewById(R.id.feedbackTextView);
+    assertThat(feedbackTextView.getVisibility(), is(equalTo(View.VISIBLE)));
+    assertThat(feedbackTextView.getText().toString(), is(equalTo("Fake feedback message")));
+    assertThat(fragmentView.findViewById(R.id.recyclerView).getVisibility(),
+        is(equalTo(View.GONE)));
+  }
+
+  @Test public void show_recyclerview_on_method_call_and_modify_view_visibility() {
+    View fragmentView = historyFragment.getView();
+
+    historyFragment.loadHistoryData(new ArrayList<>());
+
+    TextView feedbackTextView = (TextView) fragmentView.findViewById(R.id.feedbackTextView);
+    assertThat(feedbackTextView.getVisibility(), is(equalTo(View.GONE)));
+    assertThat(fragmentView.findViewById(R.id.recyclerView).getVisibility(),
+        is(equalTo(View.VISIBLE)));
+    verify(mockHistoryDataAdapter).setItems(Mockito.anyList());
   }
 }
