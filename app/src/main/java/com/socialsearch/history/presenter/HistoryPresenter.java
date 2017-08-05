@@ -24,11 +24,15 @@ public class HistoryPresenter extends Presenter<HistoryView> {
   @Override public void start() {
     model.obtainHistoryData(new Callback<List<HistoryData>>() {
       @Override public void onSuccess(List<HistoryData> response) {
-        view.loadHistoryData(response);
+        if (response.isEmpty()) {
+          view.showFeedbackMessage("No search history found.");
+        } else {
+          view.loadHistoryData(response);
+        }
       }
 
       @Override public void onError(String errorMessage) {
-
+        view.showFeedbackMessage(errorMessage);
       }
     });
   }
