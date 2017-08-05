@@ -7,6 +7,7 @@ import com.socialsearch.main.state.DemoStoryState;
 import com.socialsearch.search.model.SearchModel;
 import com.socialsearch.search.view.SearchView;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +18,7 @@ import org.mockito.MockitoAnnotations;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -96,5 +98,18 @@ public class SearchPresenterShould {
     searchPresenter.start();
 
     verify(mockView).showFeedbackMessage("Any results found.");
+  }
+
+  @Test public void load_model_response() {
+    doAnswer(invocation -> {
+      ((Callback<List<SocialData>>) invocation.getArguments()[1]).onSuccess(
+          Arrays.asList(mock(SocialData.class)));
+      return null;
+    }).when(mockSearchModel).obtainSocialData(Mockito.anyString(), any(Callback.class));
+    when(mockStoryState.getQuery()).thenReturn("Fake query");
+
+    searchPresenter.start();
+
+    verify(mockView).loadSocialData(Mockito.anyList());
   }
 }

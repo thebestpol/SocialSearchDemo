@@ -44,6 +44,8 @@ public class SearchPresenter {
         @Override public void onSuccess(List<SocialData> response) {
           if (response.isEmpty()) {
             view.showFeedbackMessage("Any results found.");
+          } else {
+            view.loadSocialData(response);
           }
         }
 
