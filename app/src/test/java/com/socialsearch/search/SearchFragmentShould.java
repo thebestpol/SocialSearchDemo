@@ -78,6 +78,14 @@ import static org.robolectric.Shadows.shadowOf;
     SupportFragmentTestUtil.startVisibleFragment(fragment, MainActivity.class, R.id.container);
 
     fragment.onStop();
+
     verify(presenter).stop();
+  }
+
+  @Test public void start_fragment_view() {
+    SearchFragment fragment = new SearchFragment();
+    SupportFragmentTestUtil.startVisibleFragment(fragment, MainActivity.class, R.id.container);
+
+    assertThat(fragment.getView(), notNullValue());
   }
 }
