@@ -207,4 +207,13 @@ public class SearchPresenterShould {
     verify(mockStoryState).clearSocialData();
     verify(mockStoryState).clearQuery();
   }
+
+  @Test public void load_state_social_data_if_has() {
+    List<SocialData> fakeStateSocialData = Arrays.asList(mock(SocialData.class));
+    when(mockStoryState.getSocialData()).thenReturn(fakeStateSocialData);
+
+    searchPresenter.start();
+
+    verify(mockView).loadSocialData(eq(fakeStateSocialData));
+  }
 }
