@@ -14,6 +14,7 @@ import com.socialsearch.search.presenter.SearchPresenter;
 import com.socialsearch.search.view.adapter.SocialDataAdapter;
 import dagger.Module;
 import dagger.Provides;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Named;
 
@@ -27,7 +28,13 @@ import javax.inject.Named;
   @Provides @PerFragment public SearchModel provideSearchModel() {
     return new SearchModel() {
       @Override public void obtainSocialData(String query, Callback<List<SocialData>> callback) {
+        List<SocialData> socialData = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+          socialData.add(new SocialData(
+              "https://globalgamejam.org/sites/default/files/styles/game_sidebar__normal/public/game/featured_image/promo_5.png"));
+        }
 
+        callback.onSuccess(socialData);
       }
     };
   }

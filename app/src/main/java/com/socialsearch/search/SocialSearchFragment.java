@@ -130,6 +130,10 @@ public class SocialSearchFragment extends Fragment implements SocialSearchView {
   }
 
   @Override public void loadSocialData(List<SocialData> socialData) {
+    recyclerView.setVisibility(View.VISIBLE);
+    progressView.setVisibility(View.GONE);
+    feedbackTextView.setVisibility(View.GONE);
+
     socialDataAdapter.setItems(socialData);
   }
 }

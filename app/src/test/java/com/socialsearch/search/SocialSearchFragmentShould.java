@@ -1,14 +1,18 @@
 package com.socialsearch.search;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import com.socialsearch.R;
+import com.socialsearch.entity.SocialData;
 import com.socialsearch.main.DemoUserStory;
 import com.socialsearch.main.MainActivity;
 import com.socialsearch.rules.RobolectricMockComponentRule;
 import com.socialsearch.search.presenter.SearchPresenter;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -152,10 +156,18 @@ import static org.robolectric.Shadows.shadowOf;
   }
 
   @Test public void show_recycler_view_with_social_data() {
+    List<SocialData> fakeSocialData = Arrays.asList(new SocialData("fakeUrl"));
     SocialSearchFragment fragment = new SocialSearchFragment();
     SupportFragmentTestUtil.startVisibleFragment(fragment, MainActivity.class, R.id.container);
 
+    fragment.loadSocialData(fakeSocialData);
 
+    View progressView = fragment.getView().findViewById(R.id.progress);
+    RecyclerView recyclerView = (RecyclerView) fragment.getView().findViewById(R.id.recyclerView);
+
+    assertThat(progressView.getVisibility(), is(equalTo(View.GONE)));
+    assertThat(recyclerView.getVisibility(), is(equalTo(View.VISIBLE)));
+    assertThat(recyclerView.getAdapter().getItemCount(), is(equalTo(1)));
   }
 
   /*
