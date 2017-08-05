@@ -132,7 +132,7 @@ import static org.robolectric.Shadows.shadowOf;
         is(equalTo(View.GONE)));
   }
 
-  @Test public void show_progress_view_message_and_mofify_view_visibility() {
+  @Test public void show_progress_view_message_and_modify_view_visibility() {
     SearchFragment fragment = new SearchFragment();
     SupportFragmentTestUtil.startVisibleFragment(fragment, MainActivity.class, R.id.container);
 

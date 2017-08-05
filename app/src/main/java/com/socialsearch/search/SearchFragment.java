@@ -17,6 +17,7 @@ import com.socialsearch.main.di.MainComponent;
 import com.socialsearch.search.di.SearchModule;
 import com.socialsearch.search.presenter.SearchPresenter;
 import com.socialsearch.search.view.SearchView;
+import com.socialsearch.search.view.adapter.SocialDataAdapter;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -29,6 +30,9 @@ import javax.inject.Inject;
 public class SearchFragment extends Fragment implements SearchView {
 
   @Inject SearchPresenter presenter;
+  @Inject SocialDataAdapter socialDataAdapter;
+  @Inject RecyclerView.LayoutManager layoutManager;
+
   private RecyclerView recyclerView;
   private View progressView;
   private TextView feedbackTextView;
@@ -62,6 +66,9 @@ public class SearchFragment extends Fragment implements SearchView {
 
   private void initializeView(View view) {
     recyclerView = ((RecyclerView) view.findViewById(R.id.recyclerView));
+    recyclerView.setLayoutManager(layoutManager);
+    recyclerView.setAdapter(socialDataAdapter);
+
     progressView = view.findViewById(R.id.progress);
     feedbackTextView = ((TextView) view.findViewById(R.id.feedbackTextView));
     progressTextView = ((TextView) progressView.findViewById(R.id.progressTextView));
