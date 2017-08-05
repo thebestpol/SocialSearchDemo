@@ -40,7 +40,7 @@ public class DemoUserStory {
   }
 
   public void restoreState(Bundle savedState) {
-    savedState.getParcelable("KEY_STATE");
+    storyState = savedState.getParcelable(KEY_STATE);
   }
 
   public void saveState(Bundle outState) {
@@ -49,5 +49,9 @@ public class DemoUserStory {
 
   public DemoStoryState getStoryState() {
     return storyState;
+  }
+
+  public void updateState(DemoStoryState storyState) {
+    this.storyState = storyState;
   }
 }

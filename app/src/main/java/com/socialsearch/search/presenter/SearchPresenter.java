@@ -73,6 +73,7 @@ public class SearchPresenter {
   }
 
   public void stop() {
+    demoUserStory.updateState(storyState);
 
   }
 
