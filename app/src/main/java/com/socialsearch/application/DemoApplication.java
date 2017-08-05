@@ -1,6 +1,7 @@
 package com.socialsearch.application;
 
 import android.app.Application;
+import android.support.annotation.VisibleForTesting;
 import com.socialsearch.application.di.DaggerDemoApplicationComponent;
 import com.socialsearch.application.di.DemoApplicationComponent;
 import com.socialsearch.application.di.DemoApplicationModule;
@@ -31,5 +32,9 @@ public class DemoApplication extends Application implements HasComponent<DemoApp
 
   @Override public DemoApplicationComponent getComponent() {
     return applicationComponent;
+  }
+
+  @VisibleForTesting public void setComponent(DemoApplicationComponent applicationComponent) {
+    this.applicationComponent = applicationComponent;
   }
 }
