@@ -143,7 +143,7 @@ import static org.robolectric.Shadows.shadowOf;
 
     assertThat(progressView.getVisibility(), is(equalTo(View.VISIBLE)));
     assertThat(progressTextView.getVisibility(), is(equalTo(View.VISIBLE)));
-    assertThat(progressTextView.getText().toString(), is(equalTo("Fake feedback message")));
+    assertThat(progressTextView.getText().toString(), is(equalTo("Fake progress message")));
     // Updates view visibility
     assertThat(fragment.getView().findViewById(R.id.feedbackTextView).getVisibility(),
         is(equalTo(View.GONE)));

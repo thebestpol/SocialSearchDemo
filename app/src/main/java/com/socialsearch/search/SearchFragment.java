@@ -29,6 +29,7 @@ public class SearchFragment extends Fragment {
   private RecyclerView recyclerView;
   private View progressView;
   private TextView feedbackTextView;
+  private TextView progressTextView;
 
   public static SearchFragment newInstance() {
     return new SearchFragment();
@@ -60,6 +61,7 @@ public class SearchFragment extends Fragment {
     recyclerView = ((RecyclerView) view.findViewById(R.id.recyclerView));
     progressView = view.findViewById(R.id.progress);
     feedbackTextView = ((TextView) view.findViewById(R.id.feedbackTextView));
+    progressTextView = ((TextView) progressView.findViewById(R.id.progressTextView));
   }
 
   @Override public void onResume() {
@@ -105,5 +107,12 @@ public class SearchFragment extends Fragment {
     feedbackTextView.setVisibility(View.VISIBLE);
     recyclerView.setVisibility(View.GONE);
     progressView.setVisibility(View.GONE);
+  }
+
+  public void showProgress(String progressMessage) {
+    progressTextView.setText(progressMessage);
+    progressView.setVisibility(View.VISIBLE);
+    feedbackTextView.setVisibility(View.GONE);
+    recyclerView.setVisibility(View.GONE);
   }
 }
