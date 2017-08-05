@@ -1,5 +1,9 @@
 package com.socialsearch.search.model;
 
+import com.socialsearch.core.model.Callback;
+import com.socialsearch.entity.SocialData;
+import java.util.List;
+
 /**
  * SocialSearchDemo
  * com.socialsearch.search.model
@@ -8,5 +12,5 @@ package com.socialsearch.search.model;
 
 public interface SearchModel {
 
-  void obtainSocialData(String query);
+  void obtainSocialData(String query, Callback<List<SocialData>> callback);
 }

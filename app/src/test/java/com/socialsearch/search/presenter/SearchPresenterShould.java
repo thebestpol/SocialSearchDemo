@@ -1,5 +1,6 @@
 package com.socialsearch.search.presenter;
 
+import com.socialsearch.core.model.Callback;
 import com.socialsearch.main.DemoUserStory;
 import com.socialsearch.main.state.DemoStoryState;
 import com.socialsearch.search.model.SearchModel;
@@ -7,8 +8,12 @@ import com.socialsearch.search.view.SearchView;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -22,7 +27,7 @@ public class SearchPresenterShould {
   @Mock SearchView mockView;
   @Mock DemoUserStory mockDemoUserStory;
   @Mock DemoStoryState mockStoryState;
-  @Mock SearchModel searchModel;
+  @Mock SearchModel mockSearchModel;
 
   private SearchPresenter searchPresenter;
 
@@ -31,7 +36,7 @@ public class SearchPresenterShould {
 
     when(mockDemoUserStory.getStoryState()).thenReturn(mockStoryState);
 
-    searchPresenter = new SearchPresenter(mockDemoUserStory, searchModel);
+    searchPresenter = new SearchPresenter(mockDemoUserStory, mockSearchModel);
     searchPresenter.setView(mockView);
   }
 
@@ -63,6 +68,18 @@ public class SearchPresenterShould {
     searchPresenter.start();
 
     verify(mockView).showProgress("Searching Fake query in social media...");
-    verify(searchModel).obtainSocialData("Fake query");
+    verify(mockSearchModel).obtainSocialData(eq("Fake query"), any(Callback.class));
+  }
+
+  @Test public void delegate_error_from_model_to_view() {
+    doAnswer(invocation -> {
+      ((Callback) invocation.getArguments()[1]).onError("Fake model error message");
+      return null;
+    }).when(mockSearchModel).obtainSocialData(Mockito.anyString(), Mockito.any(Callback.class));
+    when(mockStoryState.getQuery()).thenReturn("Fake query");
+
+    searchPresenter.start();
+
+    verify(mockView).showFeedbackMessage("Fake model error message");
   }
 }

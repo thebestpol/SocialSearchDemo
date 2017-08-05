@@ -1,9 +1,12 @@
 package com.socialsearch.search.presenter;
 
+import com.socialsearch.core.model.Callback;
+import com.socialsearch.entity.SocialData;
 import com.socialsearch.main.DemoUserStory;
 import com.socialsearch.main.state.DemoStoryState;
 import com.socialsearch.search.model.SearchModel;
 import com.socialsearch.search.view.SearchView;
+import java.util.List;
 
 /**
  * SocialSearchDemo
@@ -37,7 +40,15 @@ public class SearchPresenter {
       view.showFeedbackMessage("Click on Search menu item to make a social search.");
     } else {
       view.showProgress("Searching " + query + " in social media...");
-      searchModel.obtainSocialData(query);
+      searchModel.obtainSocialData(query, new Callback<List<SocialData>>() {
+        @Override public void onSuccess(List<SocialData> response) {
+
+        }
+
+        @Override public void onError(String errorMessage) {
+          view.showFeedbackMessage(errorMessage);
+        }
+      });
     }
   }
 
