@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity
     initializeInjector();
 
     super.onCreate(savedInstanceState);
-    
+
     setContentView(R.layout.activity_main);
 
     demoUserStory.initialize(this);
