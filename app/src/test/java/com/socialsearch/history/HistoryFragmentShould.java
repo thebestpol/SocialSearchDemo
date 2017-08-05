@@ -2,6 +2,7 @@ package com.socialsearch.history;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import com.socialsearch.R;
 import com.socialsearch.history.presenter.HistoryPresenter;
 import com.socialsearch.main.DemoUserStory;
@@ -75,5 +76,24 @@ import static org.robolectric.Shadows.shadowOf;
     historyFragment.onStop();
 
     verify(mockPresenter).stop();
+  }
+
+  @Test public void start_fragment_view() {
+    View fragmentView = historyFragment.getView();
+
+    assertThat(fragmentView, notNullValue());
+  }
+
+  @Test public void contain_recycler_view() {
+    View fragmentView = historyFragment.getView();
+
+    assertThat(fragmentView.findViewById(R.id.recyclerView), notNullValue());
+  }
+
+  @Test public void contain_feedback_view() {
+    View feedbackTextView = historyFragment.getView().findViewById(R.id.feedbackTextView);
+
+    assertThat(feedbackTextView, notNullValue());
+    assertThat(feedbackTextView.getVisibility(), is(equalTo(View.GONE)));
   }
 }
