@@ -119,4 +119,31 @@ public class SearchPresenterShould {
     verify(mockView).showProgress("Searching Fake query submitted in social media...");
     verify(mockSearchModel).obtainSocialData(eq("Fake query submitted"), any(Callback.class));
   }
+
+  @Test public void update_story_state_on_model_response_from_event() {
+    doAnswer(invocation -> {
+      ((Callback<List<SocialData>>) invocation.getArguments()[1]).onSuccess(
+          Arrays.asList(mock(SocialData.class)));
+      return null;
+    }).when(mockSearchModel).obtainSocialData(Mockito.anyString(), any(Callback.class));
+
+    searchPresenter.onQuerySubmitted("Fake Query Submitted");
+
+    verify(mockStoryState).setQuery("Fake Query Submitted");
+    verify(mockStoryState).setQueryResponse(Mockito.anyListOf(SocialData.class));
+  }
+
+  @Test public void update_story_state_on_model_response() {
+    doAnswer(invocation -> {
+      ((Callback<List<SocialData>>) invocation.getArguments()[1]).onSuccess(
+          Arrays.asList(mock(SocialData.class)));
+      return null;
+    }).when(mockSearchModel).obtainSocialData(Mockito.anyString(), any(Callback.class));
+    when(mockStoryState.getQuery()).thenReturn("Fake query");
+
+    searchPresenter.start();
+
+    verify(mockStoryState).setQuery("Fake query ");
+    verify(mockStoryState).setQueryResponse(Mockito.anyListOf(SocialData.class));
+  }
 }

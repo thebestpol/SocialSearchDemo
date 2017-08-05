@@ -170,22 +170,4 @@ import static org.robolectric.Shadows.shadowOf;
     assertThat(recyclerView.getAdapter().getItemCount(), is(equalTo(1)));
   }
 
-  /*
-    @Test public void call_presenter_on_offer_clicked() throws Exception {
-    Offer fakeOffer = new Offer.Builder().summary("Offer Summary")
-        .title("Offer Title")
-        .description("Offer description")
-        .build();
-    RecyclerView recyclerView = (RecyclerView) fragment.getView().findViewById(R.id.recyclerView);
-    List<Offer> fakeOffers = Arrays.asList(fakeOffer);
-    fragment.loadOffers(fakeOffers);
-
-    // Robolectric workarround to force redraw
-    recyclerView.measure(0, 0);
-    recyclerView.layout(0, 0, 100, 10000);
-
-    recyclerView.findViewHolderForAdapterPosition(0).itemView.performClick();
-    verify(mockPresenter).onOfferSelected(0);
-  }
-   */
 }
