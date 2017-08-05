@@ -34,7 +34,10 @@ public class SearchPresenter {
     storyState = demoUserStory.getStoryState();
     String query = storyState.getQuery();
     String errorMessage = storyState.getErrorMessage();
-    if (errorMessage != null) {
+    List<SocialData> stateSocialData = storyState.getSocialData();
+    if (stateSocialData != null && !stateSocialData.isEmpty()) {
+      view.loadSocialData(stateSocialData);
+    } else if (errorMessage != null) {
       view.showFeedbackMessage(errorMessage);
     } else if (query == null || query.isEmpty()) {
       view.showFeedbackMessage("Click on Search menu item to make a social search.");
