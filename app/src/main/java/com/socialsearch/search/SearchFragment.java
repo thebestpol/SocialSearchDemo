@@ -3,11 +3,13 @@ package com.socialsearch.search;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import com.socialsearch.R;
 import com.socialsearch.core.di.HasComponent;
 import com.socialsearch.main.di.MainComponent;
@@ -24,6 +26,9 @@ import javax.inject.Inject;
 public class SearchFragment extends Fragment {
 
   @Inject SearchPresenter presenter;
+  private RecyclerView recyclerView;
+  private View progressView;
+  private TextView feedbackTextView;
 
   public static SearchFragment newInstance() {
     return new SearchFragment();
@@ -52,7 +57,9 @@ public class SearchFragment extends Fragment {
   }
 
   private void initializeView(View view) {
-
+    recyclerView = ((RecyclerView) view.findViewById(R.id.recyclerView));
+    progressView = view.findViewById(R.id.progress);
+    feedbackTextView = ((TextView) view.findViewById(R.id.feedbackTextView));
   }
 
   @Override public void onResume() {
@@ -91,5 +98,12 @@ public class SearchFragment extends Fragment {
     //        return false;
     //      }
     //    });
+  }
+
+  public void showFeedbackMessage(String feedbackMessage) {
+    feedbackTextView.setText(feedbackMessage);
+    feedbackTextView.setVisibility(View.VISIBLE);
+    recyclerView.setVisibility(View.GONE);
+    progressView.setVisibility(View.GONE);
   }
 }

@@ -3,6 +3,7 @@ package com.socialsearch.search;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import com.socialsearch.R;
 import com.socialsearch.main.DemoUserStory;
 import com.socialsearch.main.MainActivity;
@@ -113,5 +114,21 @@ import static org.robolectric.Shadows.shadowOf;
     View progressView = fragment.getView().findViewById(R.id.progress);
     assertThat(progressView, notNullValue());
     assertThat(progressView.getVisibility(), is(equalTo(View.GONE)));
+  }
+
+  @Test public void show_feedback_on_method_call_and_modify_view_visibility() {
+    SearchFragment fragment = new SearchFragment();
+    SupportFragmentTestUtil.startVisibleFragment(fragment, MainActivity.class, R.id.container);
+
+    fragment.showFeedbackMessage("Fake feedback message");
+
+    TextView feedbackTextView = (TextView) fragment.getView().findViewById(R.id.feedbackTextView);
+    assertThat(feedbackTextView.getVisibility(), is(equalTo(View.VISIBLE)));
+    assertThat(feedbackTextView.getText().toString(), is(equalTo("Fake feedback message")));
+    // Updates view visibility
+    assertThat(fragment.getView().findViewById(R.id.progress).getVisibility(),
+        is(equalTo(View.GONE)));
+    assertThat(fragment.getView().findViewById(R.id.recyclerView).getVisibility(),
+        is(equalTo(View.GONE)));
   }
 }
