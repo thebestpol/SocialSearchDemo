@@ -20,11 +20,21 @@ public class DemoStoryState implements Parcelable {
       return new DemoStoryState[size];
     }
   };
+  private String query;
 
   public DemoStoryState() {
   }
 
   protected DemoStoryState(Parcel in) {
+    this.query = in.readString();
+  }
+
+  public String getQuery() {
+    return query;
+  }
+
+  public void setQuery(String query) {
+    this.query = query;
   }
 
   @Override public int describeContents() {
@@ -32,5 +42,6 @@ public class DemoStoryState implements Parcelable {
   }
 
   @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(this.query);
   }
 }

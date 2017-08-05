@@ -15,6 +15,7 @@ import com.socialsearch.core.di.HasComponent;
 import com.socialsearch.main.di.MainComponent;
 import com.socialsearch.search.di.SearchModule;
 import com.socialsearch.search.presenter.SearchPresenter;
+import com.socialsearch.search.view.SearchView;
 import javax.inject.Inject;
 
 /**
@@ -23,7 +24,7 @@ import javax.inject.Inject;
  * SearchFragment
  */
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements SearchView {
 
   @Inject SearchPresenter presenter;
   private RecyclerView recyclerView;
@@ -102,14 +103,14 @@ public class SearchFragment extends Fragment {
     //    });
   }
 
-  public void showFeedbackMessage(String feedbackMessage) {
+  @Override public void showFeedbackMessage(String feedbackMessage) {
     feedbackTextView.setText(feedbackMessage);
     feedbackTextView.setVisibility(View.VISIBLE);
     recyclerView.setVisibility(View.GONE);
     progressView.setVisibility(View.GONE);
   }
 
-  public void showProgress(String progressMessage) {
+  @Override public void showProgress(String progressMessage) {
     progressTextView.setText(progressMessage);
     progressView.setVisibility(View.VISIBLE);
     feedbackTextView.setVisibility(View.GONE);

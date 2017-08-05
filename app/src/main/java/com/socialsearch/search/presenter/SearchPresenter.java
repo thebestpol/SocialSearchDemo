@@ -2,7 +2,7 @@ package com.socialsearch.search.presenter;
 
 import com.socialsearch.main.DemoUserStory;
 import com.socialsearch.main.state.DemoStoryState;
-import com.socialsearch.search.SearchFragment;
+import com.socialsearch.search.view.SearchView;
 
 /**
  * SocialSearchDemo
@@ -19,7 +19,7 @@ public class SearchPresenter {
     this.demoUserStory = demoUserStory;
   }
 
-  public void setView(SearchFragment view) {
+  public void setView(SearchView view) {
   }
 
   public void start() {

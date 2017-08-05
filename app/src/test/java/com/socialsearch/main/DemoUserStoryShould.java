@@ -66,7 +66,7 @@ public class DemoUserStoryShould {
     verify(mockBundle).getParcelable(DemoUserStory.KEY_STATE);
   }
 
-  @Test public void should_store_story_state_in_activity_outstate() {
+  @Test public void store_story_state_in_activity_outstate() {
     Bundle spyBundle = spy(new Bundle());
     doNothing().when(spyBundle).putParcelable(Mockito.anyString(), Mockito.any());
     DemoStoryState spyStoryState = spy(new DemoStoryState());
