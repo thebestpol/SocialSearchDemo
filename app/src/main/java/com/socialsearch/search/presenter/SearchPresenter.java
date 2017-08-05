@@ -2,6 +2,7 @@ package com.socialsearch.search.presenter;
 
 import com.socialsearch.main.DemoUserStory;
 import com.socialsearch.main.state.DemoStoryState;
+import com.socialsearch.search.model.SearchModel;
 import com.socialsearch.search.view.SearchView;
 
 /**
@@ -12,12 +13,14 @@ import com.socialsearch.search.view.SearchView;
 
 public class SearchPresenter {
 
-  private DemoUserStory demoUserStory;
+  private final SearchModel searchModel;
+  private final DemoUserStory demoUserStory;
   private DemoStoryState storyState;
   private SearchView view;
 
-  public SearchPresenter(DemoUserStory demoUserStory) {
+  public SearchPresenter(DemoUserStory demoUserStory, SearchModel searchModel) {
     this.demoUserStory = demoUserStory;
+    this.searchModel = searchModel;
   }
 
   public void setView(SearchView view) {
@@ -34,6 +37,7 @@ public class SearchPresenter {
       view.showFeedbackMessage("Click on Search menu item to make a social search.");
     } else {
       view.showProgress("Searching " + query + " in social media...");
+      searchModel.obtainSocialData(query);
     }
   }
 

@@ -19,10 +19,11 @@ public class MainActivity extends AppCompatActivity
   private MainComponent mainComponent;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-
     initializeInjector();
+
+    super.onCreate(savedInstanceState);
+    
+    setContentView(R.layout.activity_main);
 
     demoUserStory.initialize(this);
 

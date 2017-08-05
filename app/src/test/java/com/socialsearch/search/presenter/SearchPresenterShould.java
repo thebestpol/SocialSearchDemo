@@ -2,6 +2,7 @@ package com.socialsearch.search.presenter;
 
 import com.socialsearch.main.DemoUserStory;
 import com.socialsearch.main.state.DemoStoryState;
+import com.socialsearch.search.model.SearchModel;
 import com.socialsearch.search.view.SearchView;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +22,7 @@ public class SearchPresenterShould {
   @Mock SearchView mockView;
   @Mock DemoUserStory mockDemoUserStory;
   @Mock DemoStoryState mockStoryState;
+  @Mock SearchModel searchModel;
 
   private SearchPresenter searchPresenter;
 
@@ -29,7 +31,7 @@ public class SearchPresenterShould {
 
     when(mockDemoUserStory.getStoryState()).thenReturn(mockStoryState);
 
-    searchPresenter = new SearchPresenter(mockDemoUserStory);
+    searchPresenter = new SearchPresenter(mockDemoUserStory, searchModel);
     searchPresenter.setView(mockView);
   }
 
@@ -61,5 +63,6 @@ public class SearchPresenterShould {
     searchPresenter.start();
 
     verify(mockView).showProgress("Searching Fake query in social media...");
+    verify(searchModel).obtainSocialData("Fake query");
   }
 }
