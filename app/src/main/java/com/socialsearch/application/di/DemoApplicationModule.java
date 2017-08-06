@@ -45,7 +45,7 @@ import javax.inject.Singleton;
     return dataSource;
   }
 
-  @Provides @Singleton GooglePlusApi providesGoogleAPiService() {
+  @Provides @Singleton public GooglePlusApi providesGoogleAPiService() {
     return ServiceFactory.createRetrofitService(GooglePlusApi.class, GooglePlusApi.BASE_URL);
   }
 
@@ -60,11 +60,11 @@ import javax.inject.Singleton;
     return new SocialDataRepository(tweetDataSource, plusUserDataSource, socialDataMapper);
   }
 
-  @Provides @Singleton Executor provideThreadExecutor() {
+  @Provides @Singleton public Executor provideThreadExecutor() {
     return Executors.newCachedThreadPool();
   }
 
-  @Provides @Singleton MainThread provideMainThread() {
+  @Provides @Singleton public MainThread provideMainThread() {
     return new MainThread();
   }
 }

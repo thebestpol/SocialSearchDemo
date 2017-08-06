@@ -12,9 +12,9 @@ import rx.Observable;
  */
 
 public interface GooglePlusApi {
-  public static final String BASE_URL = "https://www.googleapis.com/plus";
+  public static final String BASE_URL = "https://www.googleapis.com/plus/";
   public static final String KEY = "AIzaSyBT8GFL3DRDmFoI_t1RULvGdreioQcpHc4";
 
-  @GET("/v1/people?key=" + KEY) Observable<SearchResponseDto> searchUsers(
+  @GET("v1/people?key=" + KEY) Observable<SearchResponseDto> searchUsers(
       @Query("query") String query);
 }
