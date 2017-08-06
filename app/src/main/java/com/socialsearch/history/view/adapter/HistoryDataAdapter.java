@@ -19,7 +19,7 @@ import java.util.List;
 
 public class HistoryDataAdapter extends RecyclerView.Adapter<HistoryDataAdapter.ViewHolder> {
 
-  private final List<HistoryData> items;
+  private List<HistoryData> items;
   private QuerySelectionListener listener;
 
   public HistoryDataAdapter() {
@@ -27,7 +27,7 @@ public class HistoryDataAdapter extends RecyclerView.Adapter<HistoryDataAdapter.
   }
 
   public void setItems(List<HistoryData> items) {
-    this.items.addAll(items);
+    this.items = items;
 
     notifyDataSetChanged();
   }

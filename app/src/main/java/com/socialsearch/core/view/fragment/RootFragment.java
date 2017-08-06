@@ -25,8 +25,6 @@ public abstract class RootFragment extends Fragment {
 
     getActivity().setTitle(getTitleResource());
     setHasOptionsMenu(enableOptionsMenu());
-
-    initializeInjector();
   }
 
   @Nullable @Override
@@ -37,7 +35,7 @@ public abstract class RootFragment extends Fragment {
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-
+    initializeInjector();
     initializeView(view);
     initializePresenter();
   }

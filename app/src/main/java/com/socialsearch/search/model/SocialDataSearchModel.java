@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import rx.Subscriber;
+import rx.Subscription;
+import rx.subscriptions.Subscriptions;
 
 /**
  * SocialSearchDemo
@@ -17,13 +19,18 @@ import rx.Subscriber;
 public class SocialDataSearchModel implements SearchModel {
 
   private final GetSocialDataUseCase useCase;
+  private Subscription subscription = Subscriptions.empty();
 
   @Inject public SocialDataSearchModel(GetSocialDataUseCase useCase) {
     this.useCase = useCase;
   }
 
   @Override public void obtainSocialData(String query, Callback<List<SocialData>> callback) {
-    useCase.execute(query, new SocialDataSubscriber(callback));
+    subscription = useCase.execute(query, new SocialDataSubscriber(callback));
+  }
+
+  @Override public void stop() {
+    subscription.unsubscribe();
   }
 
   private static class SocialDataSubscriber extends Subscriber<SocialData> {

@@ -44,6 +44,7 @@ public class SearchPresenter extends Presenter<SocialSearchView> {
 
   private void searchQueary(String query) {
     storyState.setQuery(query);
+    storyState.addQueryToHistory(query);
     view.showProgress("Searching " + query + " in social media...");
     searchModel.obtainSocialData(query, new Callback<List<SocialData>>() {
       @Override public void onSuccess(List<SocialData> response) {
@@ -71,6 +72,7 @@ public class SearchPresenter extends Presenter<SocialSearchView> {
 
   @Override public void stop() {
     demoUserStory.updateState(storyState);
+    searchModel.stop();
   }
 
   public void onQuerySubmitted(String query) {
