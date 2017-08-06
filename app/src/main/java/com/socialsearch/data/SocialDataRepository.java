@@ -1,5 +1,6 @@
 package com.socialsearch.data;
 
+import com.socialsearch.data.tweet.dto.TweetDto;
 import com.socialsearch.entity.SocialData;
 import rx.Observable;
 
@@ -10,6 +11,9 @@ import rx.Observable;
  */
 
 public class SocialDataRepository {
+
+  public SocialDataRepository(DataSource<TweetDto> tweetDataSource) {
+  }
 
   public Observable<SocialData> getTweetsSocialData(String query) {
     return null;
