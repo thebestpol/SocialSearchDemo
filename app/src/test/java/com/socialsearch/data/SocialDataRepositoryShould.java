@@ -2,11 +2,15 @@ package com.socialsearch.data;
 
 import com.socialsearch.data.plus.dto.PlusUserDto;
 import com.socialsearch.data.tweet.dto.TweetDto;
+import com.socialsearch.entity.SocialData;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import rx.Observable;
+import rx.observers.TestSubscriber;
 
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -17,11 +21,17 @@ import static org.mockito.Mockito.when;
  */
 public class SocialDataRepositoryShould {
 
+  @Mock DataSource<TweetDto> tweetDataSource;
+  @Mock DataSource<PlusUserDto> plusDataSource;
+  private SocialDataRepository repository;
+
+  @Before public void setUp() {
+    MockitoAnnotations.initMocks(this);
+    repository = new SocialDataRepository(tweetDataSource, plusDataSource);
+  }
+
   @Test public void get_tweets_from_data_source_and_map_to_social_data() {
-    DataSource<TweetDto> tweetDataSource = mock(DataSource.class);
-    DataSource<PlusUserDto> plusDataSource = mock(DataSource.class);
     when(tweetDataSource.getData(anyString())).thenReturn(Observable.empty());
-    SocialDataRepository repository = new SocialDataRepository(tweetDataSource, plusDataSource);
 
     repository.getTweetsSocialData("Fake query");
 
@@ -29,13 +39,36 @@ public class SocialDataRepositoryShould {
   }
 
   @Test public void get_plus_users_from_data_source_and_map_to_social_data() {
-    DataSource<TweetDto> tweetDataSource = mock(DataSource.class);
-    DataSource<PlusUserDto> plusDataSource = mock(DataSource.class);
     when(plusDataSource.getData(anyString())).thenReturn(Observable.empty());
-    SocialDataRepository repository = new SocialDataRepository(tweetDataSource, plusDataSource);
 
     repository.getPlusSocialData("Fake query");
 
     verify(plusDataSource).getData("Fake query");
+  }
+
+  @Test public void handles_error_from_tweet_data_source() {
+    when(tweetDataSource.getData(anyString())).thenReturn(Observable.error(new Exception()));
+
+    TestSubscriber<SocialData> subscriber = TestSubscriber.create();
+    repository.getTweetsSocialData("any").subscribe(subscriber);
+
+    subscriber.awaitTerminalEvent();
+
+    subscriber.assertNoErrors();
+    subscriber.assertCompleted();
+    subscriber.assertValueCount(0);
+  }
+
+  @Test public void handles_error_from_plus_data_source() {
+    when(plusDataSource.getData(anyString())).thenReturn(Observable.error(new Exception()));
+
+    TestSubscriber<SocialData> subscriber = TestSubscriber.create();
+    repository.getPlusSocialData("any").subscribe(subscriber);
+
+    subscriber.awaitTerminalEvent();
+
+    subscriber.assertNoErrors();
+    subscriber.assertCompleted();
+    subscriber.assertValueCount(0);
   }
 }
