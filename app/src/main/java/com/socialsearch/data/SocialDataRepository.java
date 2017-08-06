@@ -1,5 +1,6 @@
 package com.socialsearch.data;
 
+import com.socialsearch.data.plus.dto.PlusUserDto;
 import com.socialsearch.data.tweet.dto.TweetDto;
 import com.socialsearch.entity.SocialData;
 import rx.Observable;
@@ -13,9 +14,12 @@ import rx.Observable;
 public class SocialDataRepository {
 
   private final DataSource<TweetDto> tweetDataSource;
+  private final DataSource<PlusUserDto> plusDataSource;
 
-  public SocialDataRepository(DataSource<TweetDto> tweetDataSource) {
+  public SocialDataRepository(DataSource<TweetDto> tweetDataSource,
+      DataSource<PlusUserDto> plusDataSource) {
     this.tweetDataSource = tweetDataSource;
+    this.plusDataSource = plusDataSource;
   }
 
   public Observable<SocialData> getTweetsSocialData(String query) {
@@ -23,6 +27,6 @@ public class SocialDataRepository {
   }
 
   public Observable<SocialData> getPlusSocialData(String query) {
-    return null;
+    return plusDataSource.getData(query).cast(SocialData.class);
   }
 }
