@@ -10,6 +10,10 @@ import org.mockito.MockitoAnnotations;
 import rx.Observable;
 import rx.observers.TestSubscriber;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -70,5 +74,38 @@ public class SocialDataRepositoryShould {
     subscriber.assertNoErrors();
     subscriber.assertCompleted();
     subscriber.assertValueCount(0);
+  }
+
+  @Test public void map_response_from_tweet_data_source() {
+    TweetDto tweetDto = new TweetDto();
+    tweetDto.setTweetImage("fakeTweetImage");
+    when(tweetDataSource.getData(anyString())).thenReturn(Observable.just(tweetDto));
+
+    TestSubscriber<SocialData> subscriber = TestSubscriber.create();
+    repository.getTweetsSocialData("any").subscribe(subscriber);
+
+    subscriber.awaitTerminalEvent();
+
+    subscriber.assertNoErrors();
+    subscriber.assertCompleted();
+    subscriber.assertValueCount(1);
+    assertThat(subscriber.getOnNextEvents().get(0),
+        hasProperty("imageUrl", is(equalTo("fakeTweetImage"))));
+  }
+
+  @Test public void map_response_from_plus_data_source() {
+    PlusUserDto userDto = new PlusUserDto();
+    userDto.setProfileImage("fakeProfileImage");
+    when(plusDataSource.getData(anyString())).thenReturn(Observable.just(userDto));
+
+    TestSubscriber<SocialData> subscriber = TestSubscriber.create();
+    repository.getPlusSocialData("any").subscribe(subscriber);
+
+    subscriber.awaitTerminalEvent();
+
+    subscriber.assertCompleted();
+    subscriber.assertValueCount(1);
+    assertThat(subscriber.getOnNextEvents().get(0),
+        hasProperty("imageUrl", is(equalTo("fakeProfileImage"))));
   }
 }

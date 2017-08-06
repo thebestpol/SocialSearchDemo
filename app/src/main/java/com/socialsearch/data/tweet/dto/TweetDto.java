@@ -8,4 +8,13 @@ package com.socialsearch.data.tweet.dto;
 
 public class TweetDto {
 
+  private String tweetImage;
+
+  public String getTweetImage() {
+    return tweetImage;
+  }
+
+  public void setTweetImage(String tweetImage) {
+    this.tweetImage = tweetImage;
+  }
 }
