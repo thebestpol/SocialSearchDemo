@@ -3,14 +3,14 @@ package com.socialsearch.data.mapper;
 import com.socialsearch.data.plus.dto.PlusUserDto;
 import com.socialsearch.data.tweet.dto.TweetDto;
 import com.socialsearch.entity.SocialData;
+import javax.inject.Singleton;
 
 /**
  * SocialSearchDemo
  * com.socialsearch.data.mapper
  * SocialDataMapper
  */
-
-public class SocialDataMapper {
+@Singleton public class SocialDataMapper {
 
   private final DtoMapper<String, SocialData> dtoMapper = SocialData::new;
 

@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import com.socialsearch.data.tweet.dto.TweetDto;
 import java.util.List;
+import javax.inject.Inject;
 import rx.Emitter;
 import rx.Observable;
 import twitter4j.MediaEntity;
@@ -22,6 +23,10 @@ import twitter4j.TwitterFactory;
 public class TweetDataSource implements DataSource<TweetDto> {
 
   boolean cancelled;
+
+  @Inject public TweetDataSource() {
+
+  }
 
   @Override public Observable<TweetDto> getData(String query) {
     return createTwitterObservable(query).filter(status -> status != null)

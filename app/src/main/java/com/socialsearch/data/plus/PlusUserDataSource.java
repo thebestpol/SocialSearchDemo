@@ -4,6 +4,7 @@ import com.socialsearch.data.DataSource;
 import com.socialsearch.data.plus.dto.ItemDto;
 import com.socialsearch.data.plus.dto.PlusUserDto;
 import com.socialsearch.data.plus.dto.SearchResponseDto;
+import javax.inject.Inject;
 import rx.Observable;
 
 /**
@@ -16,7 +17,7 @@ public class PlusUserDataSource implements DataSource<PlusUserDto> {
 
   private final GooglePlusApi googlePlusApi;
 
-  public PlusUserDataSource(GooglePlusApi googlePlusApi) {
+  @Inject public PlusUserDataSource(GooglePlusApi googlePlusApi) {
     this.googlePlusApi = googlePlusApi;
   }
 
