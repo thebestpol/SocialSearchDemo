@@ -80,8 +80,7 @@ public class SocialDataRepositoryShould {
   }
 
   @Test public void map_response_from_tweet_data_source() {
-    TweetDto tweetDto = new TweetDto();
-    tweetDto.setTweetImage("fakeTweetImage");
+    TweetDto tweetDto = new TweetDto("fakeTweetImage");
     when(tweetDataSource.getData(anyString())).thenReturn(Observable.just(tweetDto));
 
     TestSubscriber<SocialData> subscriber = TestSubscriber.create();

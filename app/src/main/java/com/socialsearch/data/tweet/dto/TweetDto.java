@@ -10,6 +10,10 @@ public class TweetDto {
 
   private String tweetImage;
 
+  public TweetDto(String tweetImage) {
+    this.tweetImage = tweetImage;
+  }
+
   public String getTweetImage() {
     return tweetImage;
   }
