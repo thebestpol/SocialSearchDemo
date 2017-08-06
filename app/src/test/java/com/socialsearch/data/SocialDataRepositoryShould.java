@@ -1,5 +1,6 @@
 package com.socialsearch.data;
 
+import com.socialsearch.data.mapper.SocialDataMapper;
 import com.socialsearch.data.plus.dto.PlusUserDto;
 import com.socialsearch.data.tweet.dto.TweetDto;
 import com.socialsearch.entity.SocialData;
@@ -7,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import rx.Observable;
 import rx.observers.TestSubscriber;
 
@@ -27,11 +29,12 @@ public class SocialDataRepositoryShould {
 
   @Mock DataSource<TweetDto> tweetDataSource;
   @Mock DataSource<PlusUserDto> plusDataSource;
+  @Spy SocialDataMapper socialDataMapper;
   private SocialDataRepository repository;
 
   @Before public void setUp() {
     MockitoAnnotations.initMocks(this);
-    repository = new SocialDataRepository(tweetDataSource, plusDataSource);
+    repository = new SocialDataRepository(tweetDataSource, plusDataSource, socialDataMapper);
   }
 
   @Test public void get_tweets_from_data_source_and_map_to_social_data() {
