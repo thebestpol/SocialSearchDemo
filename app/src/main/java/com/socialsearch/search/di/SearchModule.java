@@ -2,20 +2,21 @@ package com.socialsearch.search.di;
 
 import android.content.Context;
 import com.socialsearch.core.di.PerFragment;
-import com.socialsearch.core.model.Callback;
+import com.socialsearch.core.executor.MainThread;
 import com.socialsearch.core.view.ImageLoader;
 import com.socialsearch.core.view.manager.GirdLayoutManagerProvider;
 import com.socialsearch.core.view.manager.LayoutManagerProvider;
 import com.socialsearch.core.view.manager.LinerLayoutManagerProvider;
-import com.socialsearch.entity.SocialData;
+import com.socialsearch.data.SocialDataRepository;
+import com.socialsearch.history.usecase.GetSocialDataUseCase;
 import com.socialsearch.main.DemoUserStory;
 import com.socialsearch.search.model.SearchModel;
+import com.socialsearch.search.model.SocialDataSearchModel;
 import com.socialsearch.search.presenter.SearchPresenter;
 import com.socialsearch.search.view.adapter.SocialDataAdapter;
 import dagger.Module;
 import dagger.Provides;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.Executor;
 import javax.inject.Named;
 
 /**
@@ -25,18 +26,8 @@ import javax.inject.Named;
  */
 @Module public class SearchModule {
 
-  @Provides @PerFragment public SearchModel provideSearchModel() {
-    return new SearchModel() {
-      @Override public void obtainSocialData(String query, Callback<List<SocialData>> callback) {
-        List<SocialData> socialData = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-          socialData.add(new SocialData(
-              "https://globalgamejam.org/sites/default/files/styles/game_sidebar__normal/public/game/featured_image/promo_5.png"));
-        }
-
-        callback.onSuccess(socialData);
-      }
-    };
+  @Provides @PerFragment public SearchModel provideSearchModel(SocialDataSearchModel searchModel) {
+    return searchModel;
   }
 
   @Provides @PerFragment
@@ -53,5 +44,11 @@ import javax.inject.Named;
       @Named("screenOrientation") boolean isLandscape) {
     return isLandscape ? new GirdLayoutManagerProvider(context)
         : new LinerLayoutManagerProvider(context);
+  }
+
+  @Provides @PerFragment
+  public GetSocialDataUseCase provideGetSocialDataUseCase(SocialDataRepository repository,
+      Executor executor, MainThread scheduler) {
+    return new GetSocialDataUseCase(repository, executor, scheduler);
   }
 }

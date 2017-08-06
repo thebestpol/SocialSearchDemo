@@ -2,6 +2,7 @@ package com.socialsearch.main.state;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import com.socialsearch.entity.HistoryData;
 import com.socialsearch.entity.SocialData;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,27 +15,13 @@ import java.util.List;
 
 public class DemoStoryState implements Parcelable {
 
-  public static final Creator<DemoStoryState> CREATOR = new Creator<DemoStoryState>() {
-    @Override public DemoStoryState createFromParcel(Parcel source) {
-      return new DemoStoryState(source);
-    }
-
-    @Override public DemoStoryState[] newArray(int size) {
-      return new DemoStoryState[size];
-    }
-  };
   private String query;
   private String feedBackMessage;
   private List<SocialData> socialData;
+  private List<HistoryData> history;
 
   public DemoStoryState() {
-  }
-
-  protected DemoStoryState(Parcel in) {
-    this.query = in.readString();
-    this.feedBackMessage = in.readString();
-    this.socialData = new ArrayList<SocialData>();
-    in.readList(this.socialData, SocialData.class.getClassLoader());
+    history = new ArrayList<>();
   }
 
   public String getQuery() {
@@ -43,6 +30,10 @@ public class DemoStoryState implements Parcelable {
 
   public void setQuery(String query) {
     this.query = query;
+  }
+
+  public void addQueryToHistory(String query) {
+    history.add(new HistoryData(query));
   }
 
   public String getFeedBackMessage() {
@@ -61,14 +52,8 @@ public class DemoStoryState implements Parcelable {
     return socialData;
   }
 
-  @Override public int describeContents() {
-    return 0;
-  }
-
-  @Override public void writeToParcel(Parcel dest, int flags) {
-    dest.writeString(this.query);
-    dest.writeString(this.feedBackMessage);
-    dest.writeList(this.socialData);
+  public List<HistoryData> getHistory() {
+    return history;
   }
 
   public void clearQueryResponse() {
@@ -82,4 +67,32 @@ public class DemoStoryState implements Parcelable {
   public void clearFeedbackMessage() {
     feedBackMessage = null;
   }
+
+  @Override public int describeContents() {
+    return 0;
+  }
+
+  @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(this.query);
+    dest.writeString(this.feedBackMessage);
+    dest.writeTypedList(this.socialData);
+    dest.writeTypedList(this.history);
+  }
+
+  protected DemoStoryState(Parcel in) {
+    this.query = in.readString();
+    this.feedBackMessage = in.readString();
+    this.socialData = in.createTypedArrayList(SocialData.CREATOR);
+    this.history = in.createTypedArrayList(HistoryData.CREATOR);
+  }
+
+  public static final Creator<DemoStoryState> CREATOR = new Creator<DemoStoryState>() {
+    @Override public DemoStoryState createFromParcel(Parcel source) {
+      return new DemoStoryState(source);
+    }
+
+    @Override public DemoStoryState[] newArray(int size) {
+      return new DemoStoryState[size];
+    }
+  };
 }

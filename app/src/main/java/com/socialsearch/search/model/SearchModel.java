@@ -13,4 +13,6 @@ import java.util.List;
 public interface SearchModel {
 
   void obtainSocialData(String query, Callback<List<SocialData>> callback);
+
+  void stop();
 }

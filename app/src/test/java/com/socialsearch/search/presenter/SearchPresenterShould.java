@@ -134,6 +134,7 @@ public class SearchPresenterShould {
 
     verify(mockStoryState).setQuery("Fake Query Submitted");
     verify(mockStoryState).setQueryResponse(Mockito.anyListOf(SocialData.class));
+    verify(mockStoryState).addQueryToHistory("Fake Query Submitted");
   }
 
   @Test public void update_story_state_on_model_response() {
@@ -147,9 +148,9 @@ public class SearchPresenterShould {
     searchPresenter.start();
 
     verify(mockStoryState).setQuery("Fake query");
+    verify(mockStoryState).addQueryToHistory("Fake query");
     verify(mockStoryState).setQueryResponse(Mockito.anyListOf(SocialData.class));
     verify(mockStoryState).clearFeedbackMessage();
-
   }
 
   @Test public void update_story_state_on_model_empty_response_from_event() {
