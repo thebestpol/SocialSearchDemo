@@ -12,11 +12,14 @@ import rx.Observable;
 
 public class SocialDataRepository {
 
+  private final DataSource<TweetDto> tweetDataSource;
+
   public SocialDataRepository(DataSource<TweetDto> tweetDataSource) {
+    this.tweetDataSource = tweetDataSource;
   }
 
   public Observable<SocialData> getTweetsSocialData(String query) {
-    return null;
+    return tweetDataSource.getData(query).cast(SocialData.class);
   }
 
   public Observable<SocialData> getPlusSocialData(String query) {
