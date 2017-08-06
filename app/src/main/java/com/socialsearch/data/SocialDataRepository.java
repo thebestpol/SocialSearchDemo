@@ -23,10 +23,14 @@ public class SocialDataRepository {
   }
 
   public Observable<SocialData> getTweetsSocialData(String query) {
-    return tweetDataSource.getData(query).cast(SocialData.class);
+    return tweetDataSource.getData(query)
+        .cast(SocialData.class)
+        .onErrorResumeNext(Observable.empty());
   }
 
   public Observable<SocialData> getPlusSocialData(String query) {
-    return plusDataSource.getData(query).cast(SocialData.class);
+    return plusDataSource.getData(query)
+        .cast(SocialData.class)
+        .onErrorResumeNext(Observable.empty());
   }
 }
