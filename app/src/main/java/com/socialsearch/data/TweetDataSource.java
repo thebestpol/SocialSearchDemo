@@ -16,10 +16,10 @@ import twitter4j.TwitterFactory;
 /**
  * SocialSearchDemo
  * com.socialsearch.data
- * TwitterDataSource
+ * TweetDataSource
  */
 
-public class TwitterDataSource implements DataSource<TweetDto> {
+public class TweetDataSource implements DataSource<TweetDto> {
 
   boolean cancelled;
 

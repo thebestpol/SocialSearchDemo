@@ -96,8 +96,7 @@ public class SocialDataRepositoryShould {
   }
 
   @Test public void map_response_from_plus_data_source() {
-    PlusUserDto userDto = new PlusUserDto();
-    userDto.setProfileImage("fakeProfileImage");
+    PlusUserDto userDto = new PlusUserDto("fakeProfileImage");
     when(plusDataSource.getData(anyString())).thenReturn(Observable.just(userDto));
 
     TestSubscriber<SocialData> subscriber = TestSubscriber.create();

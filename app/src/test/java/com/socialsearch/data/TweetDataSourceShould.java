@@ -15,16 +15,16 @@ import static org.mockito.Mockito.when;
 /**
  * SocialSearchDemo
  * com.socialsearch.data
- * TwitterDataSourceShould
+ * TweetDataSourceShould
  */
-public class TwitterDataSourceShould {
+public class TweetDataSourceShould {
 
-  private TwitterDataSource twitterDataSource;
+  private TweetDataSource twitterDataSource;
   private Helper mockHelper;
 
   @Before public void setUp() {
     mockHelper = mock(Helper.class);
-    twitterDataSource = new TwitterDataSource() {
+    twitterDataSource = new TweetDataSource() {
       @NonNull @Override public Observable<Status> createTwitterObservable(String query) {
         return mockHelper.createTwitterObservable();
       }
