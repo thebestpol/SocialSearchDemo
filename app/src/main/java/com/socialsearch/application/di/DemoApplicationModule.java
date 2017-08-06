@@ -2,6 +2,7 @@ package com.socialsearch.application.di;
 
 import android.content.Context;
 import com.socialsearch.application.DemoApplication;
+import com.socialsearch.core.executor.MainThread;
 import com.socialsearch.core.view.ImageLoader;
 import com.socialsearch.data.DataSource;
 import com.socialsearch.data.SocialDataRepository;
@@ -14,6 +15,8 @@ import com.socialsearch.data.plus.dto.PlusUserDto;
 import com.socialsearch.data.tweet.dto.TweetDto;
 import dagger.Module;
 import dagger.Provides;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import javax.inject.Singleton;
 
 /**
@@ -55,5 +58,13 @@ import javax.inject.Singleton;
   public SocialDataRepository provideSocialDataRepository(DataSource<TweetDto> tweetDataSource,
       DataSource<PlusUserDto> plusUserDataSource, SocialDataMapper socialDataMapper) {
     return new SocialDataRepository(tweetDataSource, plusUserDataSource, socialDataMapper);
+  }
+
+  @Provides @Singleton Executor provideThreadExecutor() {
+    return Executors.newCachedThreadPool();
+  }
+
+  @Provides @Singleton MainThread provideMainThread() {
+    return new MainThread();
   }
 }
